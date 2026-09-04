@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<debugInfo>
+<manifest filename="C:\tedee\garmin\manifest.xml"/>
+<pcToLineNum>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="1" lineNum="7" parent="globals/TedeeView" pc="268435460" symbol="&lt;init&gt;"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="2" lineNum="5" parent="globals/TedeeApp" pc="268435472" symbol="&lt;init&gt;"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="3" lineNum="7" parent="globals/TedeeSyncDelegate" pc="268435484" symbol="&lt;init&gt;"/>
+<entry filename="C:\\tedee\\garmin\\bin\\gen\\006-B3907-00\\source\\Rez.mcgen" id="4" lineNum="7" parent="globals/Rez" pc="268435496" symbol="&lt;init&gt;"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="5" lineNum="569" parent="globals/TedeeUnlockConfirmationDelegate" pc="268435516" symbol="&lt;init&gt;"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="6" lineNum="3" parent="globals/TedeeDelegate" pc="268435528" symbol="&lt;init&gt;"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="7" lineNum="39" parent="globals/TedeeView" pc="268435540" symbol="onShow"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="7" lineNum="41" parent="globals/TedeeView" pc="268435542" symbol="onShow"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="7" lineNum="43" parent="globals/TedeeView" pc="268435550" symbol="onShow"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="7" lineNum="47" parent="globals/TedeeView" pc="268435562" symbol="onShow"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="7" lineNum="49" parent="globals/TedeeView" pc="268435569" symbol="onShow"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="7" lineNum="51" parent="globals/TedeeView" pc="268435576" symbol="onShow"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="7" lineNum="54" parent="globals/TedeeView" pc="268435583" symbol="onShow"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="192" parent="globals/TedeeView" pc="268435595" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="194" parent="globals/TedeeView" pc="268435598" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="200" parent="globals/TedeeView" pc="268435617" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="201" parent="globals/TedeeView" pc="268435623" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="205" parent="globals/TedeeView" pc="268435627" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="207" parent="globals/TedeeView" pc="268435634" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="211" parent="globals/TedeeView" pc="268435652" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="215" parent="globals/TedeeView" pc="268435670" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="219" parent="globals/TedeeView" pc="268435688" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="223" parent="globals/TedeeView" pc="268435692" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="229" parent="globals/TedeeView" pc="268435711" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="231" parent="globals/TedeeView" pc="268435717" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="237" parent="globals/TedeeView" pc="268435741" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="241" parent="globals/TedeeView" pc="268435759" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="8" lineNum="245" parent="globals/TedeeView" pc="268435777" symbol="loadLastError"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="9" lineNum="422" parent="globals/TedeeView" pc="268435796" symbol="moveDown"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="9" lineNum="424" parent="globals/TedeeView" pc="268435798" symbol="moveDown"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="9" lineNum="425" parent="globals/TedeeView" pc="268435806" symbol="moveDown"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="9" lineNum="429" parent="globals/TedeeView" pc="268435810" symbol="moveDown"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="9" lineNum="431" parent="globals/TedeeView" pc="268435819" symbol="moveDown"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="9" lineNum="434" parent="globals/TedeeView" pc="268435831" symbol="moveDown"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="10" lineNum="442" parent="globals/TedeeView" pc="268435843" symbol="selectAction"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="10" lineNum="444" parent="globals/TedeeView" pc="268435845" symbol="selectAction"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="10" lineNum="445" parent="globals/TedeeView" pc="268435853" symbol="selectAction"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="10" lineNum="449" parent="globals/TedeeView" pc="268435857" symbol="selectAction"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="10" lineNum="451" parent="globals/TedeeView" pc="268435867" symbol="selectAction"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="10" lineNum="455" parent="globals/TedeeView" pc="268435877" symbol="selectAction"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="11" lineNum="488" parent="globals/TedeeView" pc="268435892" symbol="performUnlock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="11" lineNum="490" parent="globals/TedeeView" pc="268435894" symbol="performUnlock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="62" parent="globals/TedeeView" pc="268435909" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="64" parent="globals/TedeeView" pc="268435912" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="70" parent="globals/TedeeView" pc="268435931" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="76" parent="globals/TedeeView" pc="268435950" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="78" parent="globals/TedeeView" pc="268435956" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="86" parent="globals/TedeeView" pc="268435977" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="88" parent="globals/TedeeView" pc="268435985" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="94" parent="globals/TedeeView" pc="268435996" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="99" parent="globals/TedeeView" pc="268436012" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="104" parent="globals/TedeeView" pc="268436027" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="12" lineNum="106" parent="globals/TedeeView" pc="268436033" symbol="loadCachedStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="13" lineNum="466" parent="globals/TedeeView" pc="268436064" symbol="showUnlockConfirmation"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="13" lineNum="468" parent="globals/TedeeView" pc="268436067" symbol="showUnlockConfirmation"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="13" lineNum="474" parent="globals/TedeeView" pc="268436096" symbol="showUnlockConfirmation"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="118" parent="globals/TedeeView" pc="268436132" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="120" parent="globals/TedeeView" pc="268436135" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="126" parent="globals/TedeeView" pc="268436154" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="127" parent="globals/TedeeView" pc="268436160" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="131" parent="globals/TedeeView" pc="268436164" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="135" parent="globals/TedeeView" pc="268436173" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="141" parent="globals/TedeeView" pc="268436190" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="144" parent="globals/TedeeView" pc="268436205" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="150" parent="globals/TedeeView" pc="268436222" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="153" parent="globals/TedeeView" pc="268436237" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="159" parent="globals/TedeeView" pc="268436254" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="162" parent="globals/TedeeView" pc="268436269" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="168" parent="globals/TedeeView" pc="268436286" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="171" parent="globals/TedeeView" pc="268436301" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="177" parent="globals/TedeeView" pc="268436318" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="14" lineNum="182" parent="globals/TedeeView" pc="268436333" symbol="loadActionNote"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="500" parent="globals/TedeeView" pc="268436352" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="502" parent="globals/TedeeView" pc="268436354" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="503" parent="globals/TedeeView" pc="268436362" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="507" parent="globals/TedeeView" pc="268436366" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="512" parent="globals/TedeeView" pc="268436374" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="516" parent="globals/TedeeView" pc="268436392" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="520" parent="globals/TedeeView" pc="268436410" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="524" parent="globals/TedeeView" pc="268436428" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="531" parent="globals/TedeeView" pc="268436446" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="537" parent="globals/TedeeView" pc="268436466" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="543" parent="globals/TedeeView" pc="268436483" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="548" parent="globals/TedeeView" pc="268436498" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="553" parent="globals/TedeeView" pc="268436510" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="557" parent="globals/TedeeView" pc="268436522" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="15" lineNum="560" parent="globals/TedeeView" pc="268436533" symbol="startWifiSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="16" lineNum="29" parent="globals/TedeeView" pc="268436545" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="16" lineNum="31" parent="globals/TedeeView" pc="268436547" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="255" parent="globals/TedeeView" pc="268436560" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="257" parent="globals/TedeeView" pc="268436563" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="261" parent="globals/TedeeView" pc="268436572" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="267" parent="globals/TedeeView" pc="268436588" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="274" parent="globals/TedeeView" pc="268436596" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="287" parent="globals/TedeeView" pc="268436622" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="300" parent="globals/TedeeView" pc="268436648" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="313" parent="globals/TedeeView" pc="268436674" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="326" parent="globals/TedeeView" pc="268436700" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="328" parent="globals/TedeeView" pc="268436709" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="330" parent="globals/TedeeView" pc="268436719" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="339" parent="globals/TedeeView" pc="268436746" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="349" parent="globals/TedeeView" pc="268436776" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="358" parent="globals/TedeeView" pc="268436803" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="369" parent="globals/TedeeView" pc="268436833" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="383" parent="globals/TedeeView" pc="268436860" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="17" lineNum="387" parent="globals/TedeeView" pc="268436874" symbol="onUpdate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="18" lineNum="402" parent="globals/TedeeView" pc="268436905" symbol="moveUp"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="18" lineNum="404" parent="globals/TedeeView" pc="268436907" symbol="moveUp"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="18" lineNum="405" parent="globals/TedeeView" pc="268436915" symbol="moveUp"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="18" lineNum="409" parent="globals/TedeeView" pc="268436919" symbol="moveUp"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="18" lineNum="411" parent="globals/TedeeView" pc="268436927" symbol="moveUp"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="18" lineNum="414" parent="globals/TedeeView" pc="268436939" symbol="moveUp"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="19" lineNum="12" parent="globals/TedeeApp" pc="268436951" symbol="onStart"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="20" lineNum="20" parent="globals/TedeeApp" pc="268436954" symbol="getInitialView"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="20" lineNum="22" parent="globals/TedeeApp" pc="268436957" symbol="getInitialView"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="20" lineNum="25" parent="globals/TedeeApp" pc="268436977" symbol="getInitialView"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="20" lineNum="28" parent="globals/TedeeApp" pc="268436999" symbol="getInitialView"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="21" lineNum="43" parent="globals/TedeeApp" pc="268437014" symbol="getSyncDelegate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="21" lineNum="45" parent="globals/TedeeApp" pc="268437016" symbol="getSyncDelegate"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="22" lineNum="7" parent="globals/TedeeApp" pc="268437035" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="22" lineNum="8" parent="globals/TedeeApp" pc="268437037" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeApp.mc" id="23" lineNum="16" parent="globals/TedeeApp" pc="268437050" symbol="onStop"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="42" parent="globals/TedeeSyncDelegate" pc="268437053" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="45" parent="globals/TedeeSyncDelegate" pc="268437056" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="46" parent="globals/TedeeSyncDelegate" pc="268437064" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="48" parent="globals/TedeeSyncDelegate" pc="268437072" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="53" parent="globals/TedeeSyncDelegate" pc="268437087" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="59" parent="globals/TedeeSyncDelegate" pc="268437106" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="61" parent="globals/TedeeSyncDelegate" pc="268437112" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="66" parent="globals/TedeeSyncDelegate" pc="268437128" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="70" parent="globals/TedeeSyncDelegate" pc="268437132" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="74" parent="globals/TedeeSyncDelegate" pc="268437146" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="76" parent="globals/TedeeSyncDelegate" pc="268437167" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="78" parent="globals/TedeeSyncDelegate" pc="268437174" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="82" parent="globals/TedeeSyncDelegate" pc="268437178" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="84" parent="globals/TedeeSyncDelegate" pc="268437199" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="86" parent="globals/TedeeSyncDelegate" pc="268437206" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="24" lineNum="90" parent="globals/TedeeSyncDelegate" pc="268437210" symbol="onStartSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="272" parent="globals/TedeeSyncDelegate" pc="268437227" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="281" parent="globals/TedeeSyncDelegate" pc="268437229" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="282" parent="globals/TedeeSyncDelegate" pc="268437237" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="290" parent="globals/TedeeSyncDelegate" pc="268437241" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="292" parent="globals/TedeeSyncDelegate" pc="268437250" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="294" parent="globals/TedeeSyncDelegate" pc="268437258" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="299" parent="globals/TedeeSyncDelegate" pc="268437274" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="303" parent="globals/TedeeSyncDelegate" pc="268437289" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="305" parent="globals/TedeeSyncDelegate" pc="268437296" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="313" parent="globals/TedeeSyncDelegate" pc="268437300" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="315" parent="globals/TedeeSyncDelegate" pc="268437309" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="321" parent="globals/TedeeSyncDelegate" pc="268437332" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="326" parent="globals/TedeeSyncDelegate" pc="268437350" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="330" parent="globals/TedeeSyncDelegate" pc="268437365" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="332" parent="globals/TedeeSyncDelegate" pc="268437372" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="336" parent="globals/TedeeSyncDelegate" pc="268437376" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="25" lineNum="341" parent="globals/TedeeSyncDelegate" pc="268437394" symbol="onUnlockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="26" lineNum="101" parent="globals/TedeeSyncDelegate" pc="268437411" symbol="sendLock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="26" lineNum="104" parent="globals/TedeeSyncDelegate" pc="268437414" symbol="sendLock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="26" lineNum="109" parent="globals/TedeeSyncDelegate" pc="268437429" symbol="sendLock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="26" lineNum="114" parent="globals/TedeeSyncDelegate" pc="268437436" symbol="sendLock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="26" lineNum="124" parent="globals/TedeeSyncDelegate" pc="268437443" symbol="sendLock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="26" lineNum="137" parent="globals/TedeeSyncDelegate" pc="268437473" symbol="sendLock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="27" lineNum="544" parent="globals/TedeeSyncDelegate" pc="268437505" symbol="finishSuccess"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="27" lineNum="547" parent="globals/TedeeSyncDelegate" pc="268437507" symbol="finishSuccess"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="27" lineNum="548" parent="globals/TedeeSyncDelegate" pc="268437515" symbol="finishSuccess"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="27" lineNum="552" parent="globals/TedeeSyncDelegate" pc="268437519" symbol="finishSuccess"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="27" lineNum="558" parent="globals/TedeeSyncDelegate" pc="268437538" symbol="finishSuccess"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="27" lineNum="563" parent="globals/TedeeSyncDelegate" pc="268437556" symbol="finishSuccess"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="27" lineNum="568" parent="globals/TedeeSyncDelegate" pc="268437571" symbol="finishSuccess"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="28" lineNum="413" parent="globals/TedeeSyncDelegate" pc="268437586" symbol="getStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="28" lineNum="416" parent="globals/TedeeSyncDelegate" pc="268437589" symbol="getStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="28" lineNum="421" parent="globals/TedeeSyncDelegate" pc="268437604" symbol="getStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="28" lineNum="426" parent="globals/TedeeSyncDelegate" pc="268437611" symbol="getStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="28" lineNum="436" parent="globals/TedeeSyncDelegate" pc="268437618" symbol="getStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="28" lineNum="449" parent="globals/TedeeSyncDelegate" pc="268437648" symbol="getStatus"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="462" parent="globals/TedeeSyncDelegate" pc="268437680" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="471" parent="globals/TedeeSyncDelegate" pc="268437683" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="472" parent="globals/TedeeSyncDelegate" pc="268437691" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="476" parent="globals/TedeeSyncDelegate" pc="268437695" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="483" parent="globals/TedeeSyncDelegate" pc="268437704" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="488" parent="globals/TedeeSyncDelegate" pc="268437720" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="492" parent="globals/TedeeSyncDelegate" pc="268437724" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="494" parent="globals/TedeeSyncDelegate" pc="268437739" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="498" parent="globals/TedeeSyncDelegate" pc="268437743" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="502" parent="globals/TedeeSyncDelegate" pc="268437753" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="504" parent="globals/TedeeSyncDelegate" pc="268437759" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="511" parent="globals/TedeeSyncDelegate" pc="268437782" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="515" parent="globals/TedeeSyncDelegate" pc="268437792" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="517" parent="globals/TedeeSyncDelegate" pc="268437798" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="531" parent="globals/TedeeSyncDelegate" pc="268437824" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="29" lineNum="536" parent="globals/TedeeSyncDelegate" pc="268437842" symbol="onStatusResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="352" parent="globals/TedeeSyncDelegate" pc="268437850" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="361" parent="globals/TedeeSyncDelegate" pc="268437853" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="366" parent="globals/TedeeSyncDelegate" pc="268437871" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="368" parent="globals/TedeeSyncDelegate" pc="268437886" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="372" parent="globals/TedeeSyncDelegate" pc="268437890" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="376" parent="globals/TedeeSyncDelegate" pc="268437900" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="378" parent="globals/TedeeSyncDelegate" pc="268437906" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="383" parent="globals/TedeeSyncDelegate" pc="268437932" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="390" parent="globals/TedeeSyncDelegate" pc="268437939" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="392" parent="globals/TedeeSyncDelegate" pc="268437956" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="397" parent="globals/TedeeSyncDelegate" pc="268437982" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="30" lineNum="401" parent="globals/TedeeSyncDelegate" pc="268437999" symbol="saveActionResult"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="31" lineNum="616" parent="globals/TedeeSyncDelegate" pc="268438026" symbol="onStopSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="31" lineNum="625" parent="globals/TedeeSyncDelegate" pc="268438028" symbol="onStopSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="31" lineNum="628" parent="globals/TedeeSyncDelegate" pc="268438036" symbol="onStopSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="31" lineNum="631" parent="globals/TedeeSyncDelegate" pc="268438047" symbol="onStopSync"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="32" lineNum="578" parent="globals/TedeeSyncDelegate" pc="268438062" symbol="finishFailure"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="32" lineNum="583" parent="globals/TedeeSyncDelegate" pc="268438064" symbol="finishFailure"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="32" lineNum="584" parent="globals/TedeeSyncDelegate" pc="268438072" symbol="finishFailure"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="32" lineNum="588" parent="globals/TedeeSyncDelegate" pc="268438076" symbol="finishFailure"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="32" lineNum="594" parent="globals/TedeeSyncDelegate" pc="268438095" symbol="finishFailure"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="32" lineNum="600" parent="globals/TedeeSyncDelegate" pc="268438115" symbol="finishFailure"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="32" lineNum="606" parent="globals/TedeeSyncDelegate" pc="268438135" symbol="finishFailure"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="33" lineNum="227" parent="globals/TedeeSyncDelegate" pc="268438151" symbol="sendUnlock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="33" lineNum="230" parent="globals/TedeeSyncDelegate" pc="268438154" symbol="sendUnlock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="33" lineNum="235" parent="globals/TedeeSyncDelegate" pc="268438169" symbol="sendUnlock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="33" lineNum="240" parent="globals/TedeeSyncDelegate" pc="268438176" symbol="sendUnlock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="33" lineNum="250" parent="globals/TedeeSyncDelegate" pc="268438183" symbol="sendUnlock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="33" lineNum="263" parent="globals/TedeeSyncDelegate" pc="268438213" symbol="sendUnlock"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="34" lineNum="21" parent="globals/TedeeSyncDelegate" pc="268438245" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="34" lineNum="23" parent="globals/TedeeSyncDelegate" pc="268438247" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="146" parent="globals/TedeeSyncDelegate" pc="268438260" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="155" parent="globals/TedeeSyncDelegate" pc="268438262" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="156" parent="globals/TedeeSyncDelegate" pc="268438270" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="164" parent="globals/TedeeSyncDelegate" pc="268438274" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="166" parent="globals/TedeeSyncDelegate" pc="268438283" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="168" parent="globals/TedeeSyncDelegate" pc="268438291" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="173" parent="globals/TedeeSyncDelegate" pc="268438307" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="177" parent="globals/TedeeSyncDelegate" pc="268438322" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="179" parent="globals/TedeeSyncDelegate" pc="268438329" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="187" parent="globals/TedeeSyncDelegate" pc="268438333" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="189" parent="globals/TedeeSyncDelegate" pc="268438342" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="196" parent="globals/TedeeSyncDelegate" pc="268438365" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="201" parent="globals/TedeeSyncDelegate" pc="268438383" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="205" parent="globals/TedeeSyncDelegate" pc="268438398" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="207" parent="globals/TedeeSyncDelegate" pc="268438405" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="211" parent="globals/TedeeSyncDelegate" pc="268438409" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="35" lineNum="216" parent="globals/TedeeSyncDelegate" pc="268438427" symbol="onLockResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="36" lineNum="31" parent="globals/TedeeSyncDelegate" pc="268438444" symbol="isSyncNeeded"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeSyncDelegate.mc" id="36" lineNum="34" parent="globals/TedeeSyncDelegate" pc="268438446" symbol="isSyncNeeded"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeConfig.mc" id="37" lineNum="9" parent="globals/TedeeConfig" pc="268438448" symbol="stateName"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeConfig.mc" id="37" lineNum="11" parent="globals/TedeeConfig" pc="268438459" symbol="stateName"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeConfig.mc" id="37" lineNum="25" parent="globals/TedeeConfig" pc="268438466" symbol="stateName"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="38" lineNum="583" parent="globals/TedeeUnlockConfirmationDelegate" pc="268438492" symbol="onResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="38" lineNum="585" parent="globals/TedeeUnlockConfirmationDelegate" pc="268438494" symbol="onResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="38" lineNum="590" parent="globals/TedeeUnlockConfirmationDelegate" pc="268438502" symbol="onResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="38" lineNum="594" parent="globals/TedeeUnlockConfirmationDelegate" pc="268438517" symbol="onResponse"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="39" lineNum="575" parent="globals/TedeeUnlockConfirmationDelegate" pc="268438519" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="39" lineNum="577" parent="globals/TedeeUnlockConfirmationDelegate" pc="268438521" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeView.mc" id="39" lineNum="579" parent="globals/TedeeUnlockConfirmationDelegate" pc="268438533" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="40" lineNum="25" parent="globals/TedeeDelegate" pc="268438543" symbol="onPreviousPage"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="40" lineNum="27" parent="globals/TedeeDelegate" pc="268438545" symbol="onPreviousPage"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="40" lineNum="29" parent="globals/TedeeDelegate" pc="268438557" symbol="onPreviousPage"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="41" lineNum="9" parent="globals/TedeeDelegate" pc="268438559" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="41" lineNum="11" parent="globals/TedeeDelegate" pc="268438561" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="41" lineNum="13" parent="globals/TedeeDelegate" pc="268438573" symbol="initialize"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="42" lineNum="17" parent="globals/TedeeDelegate" pc="268438583" symbol="onNextPage"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="42" lineNum="19" parent="globals/TedeeDelegate" pc="268438585" symbol="onNextPage"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="42" lineNum="21" parent="globals/TedeeDelegate" pc="268438597" symbol="onNextPage"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="43" lineNum="33" parent="globals/TedeeDelegate" pc="268438599" symbol="onSelect"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="43" lineNum="35" parent="globals/TedeeDelegate" pc="268438601" symbol="onSelect"/>
+<entry filename="C:\\tedee\\garmin\\source\\TedeeDelegate.mc" id="43" lineNum="37" parent="globals/TedeeDelegate" pc="268438613" symbol="onSelect"/>
+</pcToLineNum>
+<symbolTable>
+<entry id="8388639" module="true" symbol="Graphics"/>
+<entry field="true" id="12" symbol="batteryText"/>
+<entry id="7" module="true" symbol="TedeeConfig"/>
+<entry id="8388632" method="true" symbol="&lt;init&gt;"/>
+<entry id="31" method="true" symbol="finishSuccess"/>
+<entry id="15" method="true" symbol="loadCachedStatus"/>
+<entry id="33" method="true" symbol="onLockResponse"/>
+<entry field="true" id="27" symbol="_action"/>
+<entry id="20" method="true" symbol="moveUp"/>
+<entry id="8390424" module="true" symbol="Storage"/>
+<entry id="25" method="true" symbol="startWifiSync"/>
+<entry id="14" method="true" symbol="loadActionNote"/>
+<entry id="9" object="true" symbol="TedeeSyncDelegate"/>
+<entry field="true" id="8388611" module="true" symbol="Toybox"/>
+<entry id="8389108" method="true" symbol="onResponse"/>
+<entry id="22" method="true" symbol="selectAction"/>
+<entry field="true" id="23" symbol="selectedAction"/>
+<entry id="32" method="true" symbol="getStatus"/>
+<entry field="true" id="42" symbol="AppName"/>
+<entry id="36" method="true" symbol="saveActionResult"/>
+<entry id="8390459" method="true" symbol="onStopSync"/>
+<entry id="4" module="true" symbol="globals/Rez/Strings"/>
+<entry id="8389594" symbol="headers"/>
+<entry field="true" id="13" symbol="connectionText"/>
+<entry id="8388648" module="true" symbol="WatchUi"/>
+<entry id="30" method="true" symbol="finishFailure"/>
+<entry id="2" module="true" symbol="globals/Rez"/>
+<entry id="8390342" method="true" symbol="isSyncNeeded"/>
+<entry id="8389124" method="true" symbol="onUpdate"/>
+<entry field="true" id="17" symbol="lockText"/>
+<entry id="8390431" method="true" symbol="getSyncDelegate"/>
+<entry id="19" method="true" symbol="moveDown"/>
+<entry id="8388771" module="true" object="true" symbol="Drawables"/>
+<entry id="8389079" method="true" symbol="onPreviousPage"/>
+<entry id="37" method="true" symbol="sendLock"/>
+<entry id="24" method="true" symbol="showUnlockConfirmation"/>
+<entry id="11" object="true" symbol="TedeeView"/>
+<entry id="8388637" module="true" symbol="Communications"/>
+<entry id="3" module="true" symbol="globals/Rez/Drawables"/>
+<entry id="8389844" symbol="responseType"/>
+<entry id="5" module="true" symbol="globals/TedeeConfig"/>
+<entry id="38" method="true" symbol="sendUnlock"/>
+<entry id="39" method="true" symbol="stateName"/>
+<entry id="8388786" method="true" symbol="method"/>
+<entry id="8389619" method="true" symbol="onSelect"/>
+<entry id="8388769" module="true" object="true" symbol="Rez"/>
+<entry field="true" id="28" symbol="_actionAccepted"/>
+<entry id="8388640" module="true" symbol="Lang"/>
+<entry field="true" id="41" symbol="LauncherIcon"/>
+<entry id="8388610" symbol="statics"/>
+<entry id="8389123" method="true" symbol="onShow"/>
+<entry field="true" id="29" symbol="_stopping"/>
+<entry id="8389350" module="true" symbol="globals"/>
+<entry id="8" object="true" symbol="TedeeDelegate"/>
+<entry id="8388770" module="true" object="true" symbol="Strings"/>
+<entry field="true" id="40" symbol="_view"/>
+<entry id="8389953" module="true" symbol="PersistedContent"/>
+<entry id="8388702" method="true" symbol="initialize"/>
+<entry id="8389279" method="true" symbol="onStart"/>
+<entry id="6" object="true" symbol="TedeeApp"/>
+<entry id="16" method="true" symbol="loadLastError"/>
+<entry id="8390341" method="true" symbol="onStartSync"/>
+<entry id="8389280" method="true" symbol="getInitialView"/>
+<entry id="8389281" method="true" symbol="onStop"/>
+<entry id="35" method="true" symbol="onUnlockResponse"/>
+<entry field="true" id="26" symbol="syncStarted"/>
+<entry id="34" method="true" symbol="onStatusResponse"/>
+<entry id="10" object="true" symbol="TedeeUnlockConfirmationDelegate"/>
+<entry id="21" method="true" symbol="performUnlock"/>
+<entry id="8389078" method="true" symbol="onNextPage"/>
+<entry id="8388635" module="true" symbol="Application"/>
+<entry field="true" id="18" symbol="messageText"/>
+</symbolTable>
+<localVars>
+<entry endPc="268435794" name="success" stackId="1" startPc="268435598"/>
+<entry endPc="268435794" name="error" stackId="2" startPc="268435598"/>
+<entry endPc="268436062" name="state" stackId="1" startPc="268435912"/>
+<entry endPc="268436062" name="battery" stackId="2" startPc="268435912"/>
+<entry endPc="268436130" name="dialog" stackId="1" startPc="268436067"/>
+<entry endPc="268436350" name="note" stackId="1" startPc="268436135"/>
+<entry endPc="268436350" name="value" stackId="2" startPc="268436135"/>
+<entry arg="true" endPc="268436544" name="action" stackId="1" startPc="268436352"/>
+<entry arg="true" endPc="268436904" name="dc" stackId="1" startPc="268436560"/>
+<entry endPc="268436903" name="width" stackId="2" startPc="268436563"/>
+<entry endPc="268437013" name="view" stackId="1" startPc="268436957"/>
+<entry endPc="268437013" name="delegate" stackId="2" startPc="268436957"/>
+<entry endPc="268437225" name="pending" stackId="1" startPc="268437056"/>
+<entry arg="true" endPc="268437410" name="responseCode" stackId="1" startPc="268437227"/>
+<entry arg="true" endPc="268437410" name="data" stackId="2" startPc="268437227"/>
+<entry endPc="268437503" name="url" stackId="1" startPc="268437414"/>
+<entry endPc="268437503" name="headers" stackId="2" startPc="268437414"/>
+<entry endPc="268437503" name="options" stackId="3" startPc="268437414"/>
+<entry endPc="268437678" name="url" stackId="1" startPc="268437589"/>
+<entry endPc="268437678" name="headers" stackId="2" startPc="268437589"/>
+<entry endPc="268437678" name="options" stackId="3" startPc="268437589"/>
+<entry arg="true" endPc="268437849" name="responseCode" stackId="1" startPc="268437680"/>
+<entry arg="true" endPc="268437849" name="data" stackId="2" startPc="268437680"/>
+<entry endPc="268437820" name="response" stackId="3" startPc="268437739"/>
+<entry endPc="268437820" name="state" stackId="4" startPc="268437739"/>
+<entry endPc="268437820" name="battery" stackId="5" startPc="268437739"/>
+<entry arg="true" endPc="268438025" name="data" stackId="1" startPc="268437850"/>
+<entry arg="true" endPc="268438025" name="action" stackId="2" startPc="268437850"/>
+<entry endPc="268437935" name="response" stackId="3" startPc="268437886"/>
+<entry endPc="268437935" name="note" stackId="4" startPc="268437886"/>
+<entry arg="true" endPc="268438150" name="code" stackId="1" startPc="268438062"/>
+<entry arg="true" endPc="268438150" name="message" stackId="2" startPc="268438062"/>
+<entry endPc="268438243" name="url" stackId="1" startPc="268438154"/>
+<entry endPc="268438243" name="headers" stackId="2" startPc="268438154"/>
+<entry endPc="268438243" name="options" stackId="3" startPc="268438154"/>
+<entry arg="true" endPc="268438443" name="responseCode" stackId="1" startPc="268438260"/>
+<entry arg="true" endPc="268438443" name="data" stackId="2" startPc="268438260"/>
+<entry arg="true" endPc="268438491" name="state" stackId="1" startPc="268438448"/>
+<entry endPc="268438491" name="names" stackId="2" startPc="268438459"/>
+<entry arg="true" endPc="268438518" name="response" stackId="1" startPc="268438492"/>
+<entry arg="true" endPc="268438542" name="view" stackId="1" startPc="268438519"/>
+<entry arg="true" endPc="268438582" name="view" stackId="1" startPc="268438559"/>
+</localVars>
+<deviceInfo deviceVersion="a331630064dc3043c2508661e93a67218e43d8d4" partNumber="006-B3907-00"/>
+<annotations>
+<annotationEntry annotation="initialized" class="Drawables" module="globals/Rez" symbol="LauncherIcon"/>
+<annotationEntry annotation="initialized" class="Strings" module="globals/Rez" symbol="AppName"/>
+</annotations>
+<dataEntryOffsetMappings>
+<dataEntry label="globals" offset="58" parentId="" symbolId="globals" type="module"/>
+<dataEntry label="globals/TedeeView" offset="152" parentId="globals" symbolId="TedeeView" type="class"/>
+<dataEntry label="globals/TedeeApp" offset="349" parentId="globals" symbolId="TedeeApp" type="class"/>
+<dataEntry label="globals/TedeeSyncDelegate" offset="429" parentId="globals" symbolId="TedeeSyncDelegate" type="class"/>
+<dataEntry label="globals/TedeeConfig" offset="608" parentId="globals" symbolId="TedeeConfig" type="module"/>
+<dataEntry label="globals/Rez" offset="643" parentId="globals" symbolId="Rez" type="module"/>
+<dataEntry label="globals/TedeeUnlockConfirmationDelegate" offset="687" parentId="globals" symbolId="TedeeUnlockConfirmationDelegate" type="class"/>
+<dataEntry label="globals/TedeeDelegate" offset="749" parentId="globals" symbolId="TedeeDelegate" type="class"/>
+<dataEntry label="globals/Rez/Drawables" offset="829" parentId="Rez" symbolId="Drawables" type="module"/>
+<dataEntry label="globals/Rez/Strings" offset="864" parentId="Rez" symbolId="Strings" type="module"/>
+</dataEntryOffsetMappings>
+<functions>
+<functionEntry accessMode="public" endPc="268435471" name="&lt;init&gt;" parent="TedeeView" startPc="268435460">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268435483" name="&lt;init&gt;" parent="TedeeApp" startPc="268435472">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268435495" name="&lt;init&gt;" parent="TedeeSyncDelegate" startPc="268435484">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="&lt;init&gt;" parent="TedeeConfig">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268435515" name="&lt;init&gt;" parent="Rez" startPc="268435496">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268435527" name="&lt;init&gt;" parent="TedeeUnlockConfirmationDelegate" startPc="268435516">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268435539" name="&lt;init&gt;" parent="TedeeDelegate" startPc="268435528">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268435594" name="onShow" parent="TedeeView" startPc="268435540">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268435795" name="loadLastError" parent="TedeeView" startPc="268435595">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268435842" name="moveDown" parent="TedeeView" startPc="268435796">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268435891" name="selectAction" parent="TedeeView" startPc="268435843">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268435908" name="performUnlock" parent="TedeeView" startPc="268435892">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268436063" name="loadCachedStatus" parent="TedeeView" startPc="268435909">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268436131" name="showUnlockConfirmation" parent="TedeeView" startPc="268436064">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268436351" name="loadActionNote" parent="TedeeView" startPc="268436132">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268436544" name="startWifiSync" parent="TedeeView" startPc="268436352">
+<param id="action"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268436559" name="initialize" parent="TedeeView" startPc="268436545">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268436904" name="onUpdate" parent="TedeeView" startPc="268436560">
+<param id="dc"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268436950" name="moveUp" parent="TedeeView" startPc="268436905">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268436953" name="onStart" parent="TedeeApp" startPc="268436951">
+<param id="state"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268437013" name="getInitialView" parent="TedeeApp" startPc="268436954">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268437034" name="getSyncDelegate" parent="TedeeApp" startPc="268437014">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268437049" name="initialize" parent="TedeeApp" startPc="268437035">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268437052" name="onStop" parent="TedeeApp" startPc="268437050">
+<param id="state"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268437226" name="onStartSync" parent="TedeeSyncDelegate" startPc="268437053">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268437410" name="onUnlockResponse" parent="TedeeSyncDelegate" startPc="268437227">
+<param id="responseCode"/>
+<param id="data"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268437504" name="sendLock" parent="TedeeSyncDelegate" startPc="268437411">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268437585" name="finishSuccess" parent="TedeeSyncDelegate" startPc="268437505">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268437679" name="getStatus" parent="TedeeSyncDelegate" startPc="268437586">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268437849" name="onStatusResponse" parent="TedeeSyncDelegate" startPc="268437680">
+<param id="responseCode"/>
+<param id="data"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438025" name="saveActionResult" parent="TedeeSyncDelegate" startPc="268437850">
+<param id="data"/>
+<param id="action"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438061" name="onStopSync" parent="TedeeSyncDelegate" startPc="268438026">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438150" name="finishFailure" parent="TedeeSyncDelegate" startPc="268438062">
+<param id="code"/>
+<param id="message"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438244" name="sendUnlock" parent="TedeeSyncDelegate" startPc="268438151">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438259" name="initialize" parent="TedeeSyncDelegate" startPc="268438245">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438443" name="onLockResponse" parent="TedeeSyncDelegate" startPc="268438260">
+<param id="responseCode"/>
+<param id="data"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438447" name="isSyncNeeded" parent="TedeeSyncDelegate" startPc="268438444">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438491" name="stateName" parent="TedeeConfig" startPc="268438448">
+<param id="state"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="&lt;init&gt;" parent="Drawables">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" name="&lt;init&gt;" parent="Strings">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438518" name="onResponse" parent="TedeeUnlockConfirmationDelegate" startPc="268438492">
+<param id="response"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438542" name="initialize" parent="TedeeUnlockConfirmationDelegate" startPc="268438519">
+<param id="view"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438558" name="onPreviousPage" parent="TedeeDelegate" startPc="268438543">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438582" name="initialize" parent="TedeeDelegate" startPc="268438559">
+<param id="view"/>
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438598" name="onNextPage" parent="TedeeDelegate" startPc="268438583">
+<documentation/>
+</functionEntry>
+<functionEntry accessMode="public" endPc="268438614" name="onSelect" parent="TedeeDelegate" startPc="268438599">
+<documentation/>
+</functionEntry>
+</functions>
+</debugInfo>

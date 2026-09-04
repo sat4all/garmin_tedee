@@ -1,12 +1,13 @@
 module TedeeConfig {
-    // Set this to the HTTPS address of your Python relay.
-    // Example: https://lock.example.com
-    const BASE_URL = "https://YOUR-RELAY-DOMAIN.example";
 
-    // Set this to the same WATCH_TOKEN configured on the router relay.
-    const WATCH_TOKEN = "CHANGE-ME";
+    const BASE_URL =
+        "https://homeie.hopto.org:9443";
+
+    const WATCH_TOKEN =
+        "rafaltedee";
 
     function stateName(state) {
+
         var names = {
             0 => "Uncalibrated",
             1 => "Calibration",
@@ -20,6 +21,9 @@ module TedeeConfig {
             9 => "Unknown",
             255 => "Unpulling"
         };
-        return names[state] != null ? names[state] : "State " + state;
+
+        return names[state] != null
+            ? names[state]
+            : "State " + state;
     }
 }

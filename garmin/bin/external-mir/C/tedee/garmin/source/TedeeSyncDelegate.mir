@@ -1,0 +1,1024 @@
+[ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 1; @symbol_usingdef<0> = [Toybox,1,6,12]; @symbol_usingdef<1> = [Application,1,13,24]; @symbol_usingdef<2> = [Storage,1,25,32]; ]
+using Toybox.Application.Storage;
+[ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 2; @symbol_usingdef<0> = [Toybox,2,6,12]; @symbol_usingdef<1> = [Communications,2,13,27]; ]
+using Toybox.Communications;
+[ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 3; @symbol_usingdef<0> = [Toybox,3,6,12]; @symbol_usingdef<1> = [Lang,3,13,17]; ]
+using Toybox.Lang;
+[ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 4; @symbol_usingdef<0> = [Toybox,4,6,12]; @symbol_usingdef<1> = [PersistedContent,4,13,29]; ]
+using Toybox.PersistedContent;
+[ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 7; @symbol_classdef = [TedeeSyncDelegate,7,6,23]; @symbol_extends<0> = [Communications,8,12,26]; @symbol_extends<1> = [SyncDelegate,8,27,39]; ]
+class TedeeSyncDelegate extends Communications.SyncDelegate {
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 7; ]
+    <init> {
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 7; ]
+    static
+    <init> {
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 10; @position = 8; @symbol_vardef = [_action,10,8,15]; ]
+    var _action = null;
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 12; @position = 8; @symbol_vardef = [_stopping,12,8,17]; ]
+    var _stopping = false;
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 14; @position = 8; @symbol_vardef = [_actionAccepted,14,8,23]; ]
+    var _actionAccepted = false;
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 21; @symbol_functiondef = [initialize,21,13,23]; ]
+    function initialize() as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_21_26_24_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 23 8 ]
+        symbol [ SyncDelegate %tmp.2 23 8 20 ];
+        %tmp.2 = getv ? :SyncDelegate;
+        symbol [ initialize %tmp.3 23 21 31 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+C__tedee_garmin_source_TedeeSyncDelegate_mc_21_26_24_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 31; @symbol_functiondef = [isSyncNeeded,31,13,25]; @symbol_return<0> = [Lang,32,11,15]; @symbol_return<1> = [Boolean,32,16,23]; ]
+    function isSyncNeeded() as Lang.Boolean {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_32_24_35_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 34 8 ]
+        %tmp.1 = true;
+        ret %tmp.1;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_32_24_35_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 42; @symbol_functiondef = [onStartSync,42,13,24]; ]
+    function onStartSync() as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_43_16_94_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 45 8 ]
+        %tmp.1 = false;
+        symbol [ _stopping ? 45 8 17 ];
+        putv self :_stopping %tmp.1;
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 46 8 ]
+        %tmp.2 = false;
+        symbol [ _actionAccepted ? 46 8 23 ];
+        putv self :_actionAccepted %tmp.2;
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 48 8 ]
+        symbol [ Communications %tmp.3 48 8 22 ];
+        %tmp.3 = getm $.Toybox.Communications;
+        symbol [ notifySyncProgress %tmp.4 48 23 41 ];
+        %tmp.4 = getv function %tmp.3 :notifySyncProgress;
+        %tmp.5 = 5;
+        invoke %tmp.3 %tmp.4(%tmp.5);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 53 8 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_43_16_94_4_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_43_16_94_4_stop" ]
+        %pending.1 = local;
+        symbol [ pending %pending.1 53 12 19 ];
+        symbol [ Storage %tmp.6 54 12 19 ];
+        %tmp.6 = getm $.Toybox.Application.Storage;
+        symbol [ getValue %tmp.7 54 20 28 ];
+        %tmp.7 = getv function %tmp.6 :getValue;
+        %tmp.8 = "tedee_pending_action";
+        %tmp.9 = invoke %tmp.6 %tmp.7(%tmp.8);
+        lputv %pending.1 %tmp.9;
+        symbol [ pending %pending.1 53 12 19 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 59 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_59_8_67_8_if_stmt:
+        %tmp.10 = lgetv %pending.1;
+        symbol [ pending %tmp.10 59 12 19 ];
+        %tmp.11 = null;
+        %tmp.12 = eq %tmp.10 %tmp.11;
+        bf %tmp.12 @C__tedee_garmin_source_TedeeSyncDelegate_mc_59_8_67_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_59_8_67_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_59_29_67_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 61 12 ]
+        %tmp.13 = self;
+        symbol [ finishFailure %tmp.14 61 12 25 ];
+        %tmp.14 = getv function %tmp.13 :finishFailure;
+        %tmp.15 = -1;
+        %tmp.16 = "NO COMMAND";
+        invoke %tmp.13 %tmp.14(%tmp.15, %tmp.16);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 66 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_59_29_67_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_59_8_67_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_59_8_67_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 70 8 ]
+        %tmp.17 = lgetv %pending.1;
+        symbol [ pending %tmp.17 71 12 19 ];
+        symbol [ toString %tmp.18 71 20 28 ];
+        %tmp.18 = getv function %tmp.17 :toString;
+        %tmp.19 = invoke %tmp.17 %tmp.18();
+        symbol [ _action ? 70 8 15 ];
+        putv self :_action %tmp.19;
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 74 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_74_8_79_8_if_stmt:
+        symbol [ _action %tmp.21 74 12 19 ];
+        %tmp.21 = getv ? :_action;
+        symbol [ equals %tmp.22 74 20 26 ];
+        %tmp.22 = getv function %tmp.21 :equals;
+        %tmp.23 = "lock";
+        %tmp.24 = invoke %tmp.21 %tmp.22(%tmp.23);
+        bf %tmp.24 @C__tedee_garmin_source_TedeeSyncDelegate_mc_74_8_79_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_74_8_79_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_74_36_79_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 76 12 ]
+        %tmp.25 = self;
+        symbol [ sendLock %tmp.26 76 12 20 ];
+        %tmp.26 = getv function %tmp.25 :sendLock;
+        invoke %tmp.25 %tmp.26();
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 78 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_74_36_79_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_74_8_79_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_74_8_79_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 82 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_82_8_87_8_if_stmt:
+        symbol [ _action %tmp.28 82 12 19 ];
+        %tmp.28 = getv ? :_action;
+        symbol [ equals %tmp.29 82 20 26 ];
+        %tmp.29 = getv function %tmp.28 :equals;
+        %tmp.30 = "unlock";
+        %tmp.31 = invoke %tmp.28 %tmp.29(%tmp.30);
+        bf %tmp.31 @C__tedee_garmin_source_TedeeSyncDelegate_mc_82_8_87_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_82_8_87_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_82_38_87_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 84 12 ]
+        %tmp.32 = self;
+        symbol [ sendUnlock %tmp.33 84 12 22 ];
+        %tmp.33 = getv function %tmp.32 :sendUnlock;
+        invoke %tmp.32 %tmp.33();
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 86 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_82_38_87_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_82_8_87_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_82_8_87_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 90 8 ]
+        %tmp.34 = self;
+        symbol [ finishFailure %tmp.35 90 8 21 ];
+        %tmp.35 = getv function %tmp.34 :finishFailure;
+        %tmp.36 = -1;
+        %tmp.37 = "UNKNOWN COMMAND";
+        invoke %tmp.34 %tmp.35(%tmp.36, %tmp.37);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_43_16_94_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 101; @symbol_functiondef = [sendLock,101,13,21]; ]
+    function sendLock() as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_102_16_143_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 104 8 ]
+        symbol [ Communications %tmp.1 104 8 22 ];
+        %tmp.1 = getm $.Toybox.Communications;
+        symbol [ notifySyncProgress %tmp.2 104 23 41 ];
+        %tmp.2 = getv function %tmp.1 :notifySyncProgress;
+        %tmp.3 = 20;
+        invoke %tmp.1 %tmp.2(%tmp.3);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 109 8 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_102_16_143_4_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_102_16_143_4_stop" ]
+        %url.1 = local;
+        symbol [ url %url.1 109 12 15 ];
+        symbol [ TedeeConfig %tmp.5 110 12 23 ];
+        %tmp.5 = getv ? :TedeeConfig;
+        symbol [ BASE_URL %tmp.6 110 24 32 ];
+        %tmp.6 = getv %tmp.5 :BASE_URL;
+        %tmp.7 = "/api/lock";
+        %tmp.8 = add %tmp.6 %tmp.7;
+        lputv %url.1 %tmp.8;
+        symbol [ url %url.1 109 12 15 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 114 8 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_102_16_143_4_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_102_16_143_4_stop" ]
+        %headers.2 = local;
+        symbol [ headers %headers.2 114 12 19 ];
+        %tmp.9 = newd 2;
+        %tmp.10 = "X-Tedee-Watch-Token";
+        symbol [ TedeeConfig %tmp.12 117 16 27 ];
+        %tmp.12 = getv ? :TedeeConfig;
+        symbol [ WATCH_TOKEN %tmp.13 117 28 39 ];
+        %tmp.13 = getv %tmp.12 :WATCH_TOKEN;
+        %tmp.14 = dup %tmp.9;
+        %tmp.15 = aputv %tmp.14 %tmp.10 %tmp.13;
+        %tmp.16 = "Accept";
+        %tmp.17 = "application/json";
+        %tmp.18 = dup %tmp.15;
+        %tmp.19 = aputv %tmp.18 %tmp.16 %tmp.17;
+        lputv %headers.2 %tmp.19;
+        symbol [ headers %headers.2 114 12 19 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 124 8 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_102_16_143_4_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_102_16_143_4_stop" ]
+        %options.3 = local;
+        symbol [ options %options.3 124 12 19 ];
+        %tmp.20 = newd 3;
+        %tmp.22 = const :method;
+        symbol [ method %tmp.22 126 13 19 const ];
+        symbol [ Communications %tmp.23 127 16 30 ];
+        %tmp.23 = getm $.Toybox.Communications;
+        symbol [ HTTP_REQUEST_METHOD_POST %tmp.24 127 31 55 ];
+        %tmp.24 = getv %tmp.23 :HTTP_REQUEST_METHOD_POST;
+        %tmp.25 = dup %tmp.20;
+        %tmp.26 = aputv %tmp.25 %tmp.22 %tmp.24;
+        %tmp.28 = const :headers;
+        symbol [ headers %tmp.28 129 13 20 const ];
+        %tmp.29 = lgetv %headers.2;
+        symbol [ headers %tmp.29 130 16 23 ];
+        %tmp.30 = dup %tmp.26;
+        %tmp.31 = aputv %tmp.30 %tmp.28 %tmp.29;
+        %tmp.33 = const :responseType;
+        symbol [ responseType %tmp.33 132 13 25 const ];
+        symbol [ Communications %tmp.34 133 16 30 ];
+        %tmp.34 = getm $.Toybox.Communications;
+        symbol [ HTTP_RESPONSE_CONTENT_TYPE_JSON %tmp.35 133 31 62 ];
+        %tmp.35 = getv %tmp.34 :HTTP_RESPONSE_CONTENT_TYPE_JSON;
+        %tmp.36 = dup %tmp.31;
+        %tmp.37 = aputv %tmp.36 %tmp.33 %tmp.35;
+        lputv %options.3 %tmp.37;
+        symbol [ options %options.3 124 12 19 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 137 8 ]
+        symbol [ Communications %tmp.38 137 8 22 ];
+        %tmp.38 = getm $.Toybox.Communications;
+        symbol [ makeWebRequest %tmp.39 137 23 37 ];
+        %tmp.39 = getv function %tmp.38 :makeWebRequest;
+        %tmp.40 = lgetv %url.1;
+        symbol [ url %tmp.40 138 12 15 ];
+        %tmp.41 = null;
+        %tmp.42 = lgetv %options.3;
+        symbol [ options %tmp.42 140 12 19 ];
+        %tmp.43 = self;
+        symbol [ method %tmp.44 141 12 18 ];
+        %tmp.44 = getv function %tmp.43 :method;
+        %tmp.46 = const :onLockResponse;
+        symbol [ onLockResponse %tmp.46 141 20 34 const ];
+        %tmp.47 = invoke %tmp.43 %tmp.44(%tmp.46);
+        invoke %tmp.38 %tmp.39(%tmp.40, %tmp.41, %tmp.42, %tmp.47);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_102_16_143_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 146; @symbol_functiondef = [onLockResponse,146,13,27]; @symbol_param<0> = [responseCode,147,8,20]; @symbol_param<0>_type<0> = [Lang,147,24,28]; @symbol_param<0>_type<1> = [Number,147,29,35]; @symbol_param<1> = [data,148,8,12]; @symbol_param<1>_type<0> = [Lang,149,12,16]; @symbol_param<1>_type<1> = [Dictionary,149,17,27]; @symbol_param<1>_type<2> = [Lang,150,12,16]; @symbol_param<1>_type<3> = [String,150,17,23]; @symbol_param<1>_type<4> = [PersistedContent,151,12,28]; @symbol_param<1>_type<5> = [Iterator,151,29,37]; ]
+    function onLockResponse(responseCode as Lang.Number, data as Lang.Dictionary or Lang.String or PersistedContent.Iterator or Null) as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_153_14_220_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 155 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_155_8_157_8_if_stmt:
+        symbol [ _stopping %tmp.2 155 12 21 ];
+        %tmp.2 = getv ? :_stopping;
+        bf %tmp.2 @C__tedee_garmin_source_TedeeSyncDelegate_mc_155_8_157_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_155_8_157_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_155_23_157_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 156 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_155_23_157_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_155_8_157_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_155_8_157_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 164 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_164_8_180_8_if_stmt:
+        %tmp.3 = lgetv %responseCode;
+        symbol [ responseCode %tmp.3 164 12 24 ];
+        %tmp.4 = 200;
+        %tmp.5 = eq %tmp.3 %tmp.4;
+        bf %tmp.5 @C__tedee_garmin_source_TedeeSyncDelegate_mc_164_8_180_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_164_8_180_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_164_33_180_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 166 12 ]
+        %tmp.6 = true;
+        symbol [ _actionAccepted ? 166 12 27 ];
+        putv self :_actionAccepted %tmp.6;
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 168 12 ]
+        %tmp.7 = self;
+        symbol [ saveActionResult %tmp.8 168 12 28 ];
+        %tmp.8 = getv function %tmp.7 :saveActionResult;
+        %tmp.9 = lgetv %data;
+        symbol [ data %tmp.9 169 16 20 ];
+        %tmp.10 = "lock";
+        invoke %tmp.7 %tmp.8(%tmp.9, %tmp.10);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 173 12 ]
+        symbol [ Communications %tmp.11 173 12 26 ];
+        %tmp.11 = getm $.Toybox.Communications;
+        symbol [ notifySyncProgress %tmp.12 173 27 45 ];
+        %tmp.12 = getv function %tmp.11 :notifySyncProgress;
+        %tmp.13 = 60;
+        invoke %tmp.11 %tmp.12(%tmp.13);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 177 12 ]
+        %tmp.14 = self;
+        symbol [ getStatus %tmp.15 177 12 21 ];
+        %tmp.15 = getv function %tmp.14 :getStatus;
+        invoke %tmp.14 %tmp.15();
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 179 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_164_33_180_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_164_8_180_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_164_8_180_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 187 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_187_8_208_8_if_stmt:
+        %tmp.16 = lgetv %responseCode;
+        symbol [ responseCode %tmp.16 187 12 24 ];
+        %tmp.17 = 429;
+        %tmp.18 = eq %tmp.16 %tmp.17;
+        bf %tmp.18 @C__tedee_garmin_source_TedeeSyncDelegate_mc_187_8_208_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_187_8_208_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_187_33_208_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 189 12 ]
+        symbol [ Storage %tmp.19 189 12 19 ];
+        %tmp.19 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.20 189 20 28 ];
+        %tmp.20 = getv function %tmp.19 :setValue;
+        %tmp.21 = "tedee_action_note";
+        %tmp.22 = "cooldown";
+        invoke %tmp.19 %tmp.20(%tmp.21, %tmp.22);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 196 12 ]
+        symbol [ Storage %tmp.23 196 12 19 ];
+        %tmp.23 = getm $.Toybox.Application.Storage;
+        symbol [ deleteValue %tmp.24 196 20 31 ];
+        %tmp.24 = getv function %tmp.23 :deleteValue;
+        %tmp.25 = "tedee_pending_action";
+        invoke %tmp.23 %tmp.24(%tmp.25);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 201 12 ]
+        symbol [ Communications %tmp.26 201 12 26 ];
+        %tmp.26 = getm $.Toybox.Communications;
+        symbol [ notifySyncProgress %tmp.27 201 27 45 ];
+        %tmp.27 = getv function %tmp.26 :notifySyncProgress;
+        %tmp.28 = 60;
+        invoke %tmp.26 %tmp.27(%tmp.28);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 205 12 ]
+        %tmp.29 = self;
+        symbol [ getStatus %tmp.30 205 12 21 ];
+        %tmp.30 = getv function %tmp.29 :getStatus;
+        invoke %tmp.29 %tmp.30();
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 207 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_187_33_208_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_187_8_208_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_187_8_208_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 211 8 ]
+        symbol [ Storage %tmp.31 211 8 15 ];
+        %tmp.31 = getm $.Toybox.Application.Storage;
+        symbol [ deleteValue %tmp.32 211 16 27 ];
+        %tmp.32 = getv function %tmp.31 :deleteValue;
+        %tmp.33 = "tedee_pending_action";
+        invoke %tmp.31 %tmp.32(%tmp.33);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 216 8 ]
+        %tmp.34 = self;
+        symbol [ finishFailure %tmp.35 216 8 21 ];
+        %tmp.35 = getv function %tmp.34 :finishFailure;
+        %tmp.36 = lgetv %responseCode;
+        symbol [ responseCode %tmp.36 217 12 24 ];
+        %tmp.37 = "LOCK FAILED";
+        invoke %tmp.34 %tmp.35(%tmp.36, %tmp.37);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_153_14_220_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 227; @symbol_functiondef = [sendUnlock,227,13,23]; ]
+    function sendUnlock() as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_228_16_269_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 230 8 ]
+        symbol [ Communications %tmp.1 230 8 22 ];
+        %tmp.1 = getm $.Toybox.Communications;
+        symbol [ notifySyncProgress %tmp.2 230 23 41 ];
+        %tmp.2 = getv function %tmp.1 :notifySyncProgress;
+        %tmp.3 = 20;
+        invoke %tmp.1 %tmp.2(%tmp.3);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 235 8 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_228_16_269_4_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_228_16_269_4_stop" ]
+        %url.1 = local;
+        symbol [ url %url.1 235 12 15 ];
+        symbol [ TedeeConfig %tmp.5 236 12 23 ];
+        %tmp.5 = getv ? :TedeeConfig;
+        symbol [ BASE_URL %tmp.6 236 24 32 ];
+        %tmp.6 = getv %tmp.5 :BASE_URL;
+        %tmp.7 = "/api/unlock";
+        %tmp.8 = add %tmp.6 %tmp.7;
+        lputv %url.1 %tmp.8;
+        symbol [ url %url.1 235 12 15 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 240 8 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_228_16_269_4_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_228_16_269_4_stop" ]
+        %headers.2 = local;
+        symbol [ headers %headers.2 240 12 19 ];
+        %tmp.9 = newd 2;
+        %tmp.10 = "X-Tedee-Watch-Token";
+        symbol [ TedeeConfig %tmp.12 243 16 27 ];
+        %tmp.12 = getv ? :TedeeConfig;
+        symbol [ WATCH_TOKEN %tmp.13 243 28 39 ];
+        %tmp.13 = getv %tmp.12 :WATCH_TOKEN;
+        %tmp.14 = dup %tmp.9;
+        %tmp.15 = aputv %tmp.14 %tmp.10 %tmp.13;
+        %tmp.16 = "Accept";
+        %tmp.17 = "application/json";
+        %tmp.18 = dup %tmp.15;
+        %tmp.19 = aputv %tmp.18 %tmp.16 %tmp.17;
+        lputv %headers.2 %tmp.19;
+        symbol [ headers %headers.2 240 12 19 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 250 8 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_228_16_269_4_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_228_16_269_4_stop" ]
+        %options.3 = local;
+        symbol [ options %options.3 250 12 19 ];
+        %tmp.20 = newd 3;
+        %tmp.22 = const :method;
+        symbol [ method %tmp.22 252 13 19 const ];
+        symbol [ Communications %tmp.23 253 16 30 ];
+        %tmp.23 = getm $.Toybox.Communications;
+        symbol [ HTTP_REQUEST_METHOD_POST %tmp.24 253 31 55 ];
+        %tmp.24 = getv %tmp.23 :HTTP_REQUEST_METHOD_POST;
+        %tmp.25 = dup %tmp.20;
+        %tmp.26 = aputv %tmp.25 %tmp.22 %tmp.24;
+        %tmp.28 = const :headers;
+        symbol [ headers %tmp.28 255 13 20 const ];
+        %tmp.29 = lgetv %headers.2;
+        symbol [ headers %tmp.29 256 16 23 ];
+        %tmp.30 = dup %tmp.26;
+        %tmp.31 = aputv %tmp.30 %tmp.28 %tmp.29;
+        %tmp.33 = const :responseType;
+        symbol [ responseType %tmp.33 258 13 25 const ];
+        symbol [ Communications %tmp.34 259 16 30 ];
+        %tmp.34 = getm $.Toybox.Communications;
+        symbol [ HTTP_RESPONSE_CONTENT_TYPE_JSON %tmp.35 259 31 62 ];
+        %tmp.35 = getv %tmp.34 :HTTP_RESPONSE_CONTENT_TYPE_JSON;
+        %tmp.36 = dup %tmp.31;
+        %tmp.37 = aputv %tmp.36 %tmp.33 %tmp.35;
+        lputv %options.3 %tmp.37;
+        symbol [ options %options.3 250 12 19 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 263 8 ]
+        symbol [ Communications %tmp.38 263 8 22 ];
+        %tmp.38 = getm $.Toybox.Communications;
+        symbol [ makeWebRequest %tmp.39 263 23 37 ];
+        %tmp.39 = getv function %tmp.38 :makeWebRequest;
+        %tmp.40 = lgetv %url.1;
+        symbol [ url %tmp.40 264 12 15 ];
+        %tmp.41 = null;
+        %tmp.42 = lgetv %options.3;
+        symbol [ options %tmp.42 266 12 19 ];
+        %tmp.43 = self;
+        symbol [ method %tmp.44 267 12 18 ];
+        %tmp.44 = getv function %tmp.43 :method;
+        %tmp.46 = const :onUnlockResponse;
+        symbol [ onUnlockResponse %tmp.46 267 20 36 const ];
+        %tmp.47 = invoke %tmp.43 %tmp.44(%tmp.46);
+        invoke %tmp.38 %tmp.39(%tmp.40, %tmp.41, %tmp.42, %tmp.47);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_228_16_269_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 272; @symbol_functiondef = [onUnlockResponse,272,13,29]; @symbol_param<0> = [responseCode,273,8,20]; @symbol_param<0>_type<0> = [Lang,273,24,28]; @symbol_param<0>_type<1> = [Number,273,29,35]; @symbol_param<1> = [data,274,8,12]; @symbol_param<1>_type<0> = [Lang,275,12,16]; @symbol_param<1>_type<1> = [Dictionary,275,17,27]; @symbol_param<1>_type<2> = [Lang,276,12,16]; @symbol_param<1>_type<3> = [String,276,17,23]; @symbol_param<1>_type<4> = [PersistedContent,277,12,28]; @symbol_param<1>_type<5> = [Iterator,277,29,37]; ]
+    function onUnlockResponse(responseCode as Lang.Number, data as Lang.Dictionary or Lang.String or PersistedContent.Iterator or Null) as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_279_14_345_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 281 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_281_8_283_8_if_stmt:
+        symbol [ _stopping %tmp.2 281 12 21 ];
+        %tmp.2 = getv ? :_stopping;
+        bf %tmp.2 @C__tedee_garmin_source_TedeeSyncDelegate_mc_281_8_283_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_281_8_283_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_281_23_283_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 282 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_281_23_283_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_281_8_283_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_281_8_283_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 290 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_290_8_306_8_if_stmt:
+        %tmp.3 = lgetv %responseCode;
+        symbol [ responseCode %tmp.3 290 12 24 ];
+        %tmp.4 = 200;
+        %tmp.5 = eq %tmp.3 %tmp.4;
+        bf %tmp.5 @C__tedee_garmin_source_TedeeSyncDelegate_mc_290_8_306_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_290_8_306_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_290_33_306_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 292 12 ]
+        %tmp.6 = true;
+        symbol [ _actionAccepted ? 292 12 27 ];
+        putv self :_actionAccepted %tmp.6;
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 294 12 ]
+        %tmp.7 = self;
+        symbol [ saveActionResult %tmp.8 294 12 28 ];
+        %tmp.8 = getv function %tmp.7 :saveActionResult;
+        %tmp.9 = lgetv %data;
+        symbol [ data %tmp.9 295 16 20 ];
+        %tmp.10 = "unlock";
+        invoke %tmp.7 %tmp.8(%tmp.9, %tmp.10);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 299 12 ]
+        symbol [ Communications %tmp.11 299 12 26 ];
+        %tmp.11 = getm $.Toybox.Communications;
+        symbol [ notifySyncProgress %tmp.12 299 27 45 ];
+        %tmp.12 = getv function %tmp.11 :notifySyncProgress;
+        %tmp.13 = 60;
+        invoke %tmp.11 %tmp.12(%tmp.13);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 303 12 ]
+        %tmp.14 = self;
+        symbol [ getStatus %tmp.15 303 12 21 ];
+        %tmp.15 = getv function %tmp.14 :getStatus;
+        invoke %tmp.14 %tmp.15();
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 305 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_290_33_306_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_290_8_306_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_290_8_306_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 313 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_313_8_333_8_if_stmt:
+        %tmp.16 = lgetv %responseCode;
+        symbol [ responseCode %tmp.16 313 12 24 ];
+        %tmp.17 = 429;
+        %tmp.18 = eq %tmp.16 %tmp.17;
+        bf %tmp.18 @C__tedee_garmin_source_TedeeSyncDelegate_mc_313_8_333_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_313_8_333_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_313_33_333_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 315 12 ]
+        symbol [ Storage %tmp.19 315 12 19 ];
+        %tmp.19 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.20 315 20 28 ];
+        %tmp.20 = getv function %tmp.19 :setValue;
+        %tmp.21 = "tedee_action_note";
+        %tmp.22 = "cooldown";
+        invoke %tmp.19 %tmp.20(%tmp.21, %tmp.22);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 321 12 ]
+        symbol [ Storage %tmp.23 321 12 19 ];
+        %tmp.23 = getm $.Toybox.Application.Storage;
+        symbol [ deleteValue %tmp.24 321 20 31 ];
+        %tmp.24 = getv function %tmp.23 :deleteValue;
+        %tmp.25 = "tedee_pending_action";
+        invoke %tmp.23 %tmp.24(%tmp.25);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 326 12 ]
+        symbol [ Communications %tmp.26 326 12 26 ];
+        %tmp.26 = getm $.Toybox.Communications;
+        symbol [ notifySyncProgress %tmp.27 326 27 45 ];
+        %tmp.27 = getv function %tmp.26 :notifySyncProgress;
+        %tmp.28 = 60;
+        invoke %tmp.26 %tmp.27(%tmp.28);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 330 12 ]
+        %tmp.29 = self;
+        symbol [ getStatus %tmp.30 330 12 21 ];
+        %tmp.30 = getv function %tmp.29 :getStatus;
+        invoke %tmp.29 %tmp.30();
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 332 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_313_33_333_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_313_8_333_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_313_8_333_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 336 8 ]
+        symbol [ Storage %tmp.31 336 8 15 ];
+        %tmp.31 = getm $.Toybox.Application.Storage;
+        symbol [ deleteValue %tmp.32 336 16 27 ];
+        %tmp.32 = getv function %tmp.31 :deleteValue;
+        %tmp.33 = "tedee_pending_action";
+        invoke %tmp.31 %tmp.32(%tmp.33);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 341 8 ]
+        %tmp.34 = self;
+        symbol [ finishFailure %tmp.35 341 8 21 ];
+        %tmp.35 = getv function %tmp.34 :finishFailure;
+        %tmp.36 = lgetv %responseCode;
+        symbol [ responseCode %tmp.36 342 12 24 ];
+        %tmp.37 = "UNLOCK FAILED";
+        invoke %tmp.34 %tmp.35(%tmp.36, %tmp.37);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_279_14_345_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 352; @symbol_functiondef = [saveActionResult,352,13,29]; @symbol_param<0> = [data,353,8,12]; @symbol_param<0>_type<0> = [Lang,354,12,16]; @symbol_param<0>_type<1> = [Dictionary,354,17,27]; @symbol_param<0>_type<2> = [Lang,355,12,16]; @symbol_param<0>_type<3> = [String,355,17,23]; @symbol_param<0>_type<4> = [PersistedContent,356,12,28]; @symbol_param<0>_type<5> = [Iterator,356,29,37]; @symbol_param<1> = [action,358,8,14]; @symbol_param<1>_type<0> = [Lang,358,18,22]; @symbol_param<1>_type<1> = [String,358,23,29]; ]
+    function saveActionResult(data as Lang.Dictionary or Lang.String or PersistedContent.Iterator or Null, action as Lang.String) as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_359_14_406_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 361 8 ]
+        symbol [ Storage %tmp.1 361 8 15 ];
+        %tmp.1 = getm $.Toybox.Application.Storage;
+        symbol [ deleteValue %tmp.2 361 16 27 ];
+        %tmp.2 = getv function %tmp.1 :deleteValue;
+        %tmp.3 = "tedee_action_note";
+        invoke %tmp.1 %tmp.2(%tmp.3);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 366 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_366_8_385_8_if_stmt:
+        %tmp.4 = lgetv %data;
+        symbol [ data %tmp.4 366 12 16 ];
+        symbol [ Lang %tmp.5 366 28 32 ];
+        %tmp.5 = getm $.Toybox.Lang;
+        symbol [ Dictionary %tmp.6 366 33 43 ];
+        %tmp.6 = getv %tmp.5 :Dictionary;
+        %tmp.7 = isa %tmp.4 %tmp.6;
+        bf %tmp.7 @C__tedee_garmin_source_TedeeSyncDelegate_mc_366_8_385_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_366_8_385_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_366_45_385_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 368 12 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_366_45_385_8_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_366_45_385_8_stop" ]
+        %response.1 = local;
+        symbol [ response %response.1 368 16 24 ];
+        %tmp.8 = lgetv %data;
+        symbol [ data %tmp.8 369 16 20 ];
+        %tmp.9 = as %tmp.8 { (Lang.Dictionary) };
+        %tmp.10 = as %tmp.9 Lang.Dictionary;
+        symbol [ Lang %tmp.10 369 24 28 ];
+        symbol [ Dictionary %tmp.10 369 29 39 ];
+        lputv %response.1 %tmp.10;
+        symbol [ response %response.1 368 16 24 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 372 12 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_366_45_385_8_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_366_45_385_8_stop" ]
+        %note.2 = local;
+        symbol [ note %note.2 372 16 20 ];
+        %tmp.11 = lgetv %response.1;
+        symbol [ response %tmp.11 373 16 24 ];
+        %tmp.12 = "note";
+        %tmp.13 = agetv %tmp.11 %tmp.12;
+        lputv %note.2 %tmp.13;
+        symbol [ note %note.2 372 16 20 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 376 12 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_376_12_384_12_if_stmt:
+        %tmp.14 = lgetv %note.2;
+        symbol [ note %tmp.14 376 16 20 ];
+        %tmp.15 = null;
+        %tmp.16 = ne %tmp.14 %tmp.15;
+        bf %tmp.16 @C__tedee_garmin_source_TedeeSyncDelegate_mc_376_12_384_12_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_376_12_384_12_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_376_30_384_12_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 378 16 ]
+        symbol [ Storage %tmp.17 378 16 23 ];
+        %tmp.17 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.18 378 24 32 ];
+        %tmp.18 = getv function %tmp.17 :setValue;
+        %tmp.19 = "tedee_action_note";
+        %tmp.20 = lgetv %note.2;
+        symbol [ note %tmp.20 380 20 24 ];
+        %tmp.21 = as %tmp.20 { (!Null) };
+        symbol [ toString %tmp.22 380 25 33 ];
+        %tmp.22 = getv function %tmp.21 :toString;
+        %tmp.23 = invoke %tmp.21 %tmp.22();
+        invoke %tmp.17 %tmp.18(%tmp.19, %tmp.23);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 383 16 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_376_30_384_12_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_376_12_384_12_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_376_12_384_12_if_end:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_366_45_385_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_366_8_385_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_366_8_385_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 390 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_390_8_405_8_if_stmt:
+        %tmp.24 = lgetv %action;
+        symbol [ action %tmp.24 390 12 18 ];
+        symbol [ equals %tmp.25 390 19 25 ];
+        %tmp.25 = getv function %tmp.24 :equals;
+        %tmp.26 = "lock";
+        %tmp.27 = invoke %tmp.24 %tmp.25(%tmp.26);
+        bf %tmp.27 @C__tedee_garmin_source_TedeeSyncDelegate_mc_390_8_405_8_if_false;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_390_8_405_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_390_35_397_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 392 12 ]
+        symbol [ Storage %tmp.28 392 12 19 ];
+        %tmp.28 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.29 392 20 28 ];
+        %tmp.29 = getv function %tmp.28 :setValue;
+        %tmp.30 = "tedee_action_note";
+        %tmp.31 = "lock_sent";
+        invoke %tmp.28 %tmp.29(%tmp.30, %tmp.31);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_390_35_397_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_390_8_405_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_390_8_405_8_if_false:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 397 15 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_397_15_405_8_if_stmt:
+        %tmp.32 = lgetv %action;
+        symbol [ action %tmp.32 398 12 18 ];
+        symbol [ equals %tmp.33 398 19 25 ];
+        %tmp.33 = getv function %tmp.32 :equals;
+        %tmp.34 = "unlock";
+        %tmp.35 = invoke %tmp.32 %tmp.33(%tmp.34);
+        bf %tmp.35 @C__tedee_garmin_source_TedeeSyncDelegate_mc_397_15_405_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_397_15_405_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_399_10_405_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 401 12 ]
+        symbol [ Storage %tmp.36 401 12 19 ];
+        %tmp.36 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.37 401 20 28 ];
+        %tmp.37 = getv function %tmp.36 :setValue;
+        %tmp.38 = "tedee_action_note";
+        %tmp.39 = "unlock_sent";
+        invoke %tmp.36 %tmp.37(%tmp.38, %tmp.39);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_399_10_405_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_397_15_405_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_397_15_405_8_if_end:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_390_8_405_8_if_end:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_359_14_406_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 413; @symbol_functiondef = [getStatus,413,13,22]; ]
+    function getStatus() as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_414_16_455_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 416 8 ]
+        symbol [ Communications %tmp.1 416 8 22 ];
+        %tmp.1 = getm $.Toybox.Communications;
+        symbol [ notifySyncProgress %tmp.2 416 23 41 ];
+        %tmp.2 = getv function %tmp.1 :notifySyncProgress;
+        %tmp.3 = 75;
+        invoke %tmp.1 %tmp.2(%tmp.3);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 421 8 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_414_16_455_4_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_414_16_455_4_stop" ]
+        %url.1 = local;
+        symbol [ url %url.1 421 12 15 ];
+        symbol [ TedeeConfig %tmp.5 422 12 23 ];
+        %tmp.5 = getv ? :TedeeConfig;
+        symbol [ BASE_URL %tmp.6 422 24 32 ];
+        %tmp.6 = getv %tmp.5 :BASE_URL;
+        %tmp.7 = "/api/status";
+        %tmp.8 = add %tmp.6 %tmp.7;
+        lputv %url.1 %tmp.8;
+        symbol [ url %url.1 421 12 15 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 426 8 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_414_16_455_4_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_414_16_455_4_stop" ]
+        %headers.2 = local;
+        symbol [ headers %headers.2 426 12 19 ];
+        %tmp.9 = newd 2;
+        %tmp.10 = "X-Tedee-Watch-Token";
+        symbol [ TedeeConfig %tmp.12 429 16 27 ];
+        %tmp.12 = getv ? :TedeeConfig;
+        symbol [ WATCH_TOKEN %tmp.13 429 28 39 ];
+        %tmp.13 = getv %tmp.12 :WATCH_TOKEN;
+        %tmp.14 = dup %tmp.9;
+        %tmp.15 = aputv %tmp.14 %tmp.10 %tmp.13;
+        %tmp.16 = "Accept";
+        %tmp.17 = "application/json";
+        %tmp.18 = dup %tmp.15;
+        %tmp.19 = aputv %tmp.18 %tmp.16 %tmp.17;
+        lputv %headers.2 %tmp.19;
+        symbol [ headers %headers.2 426 12 19 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 436 8 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_414_16_455_4_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_414_16_455_4_stop" ]
+        %options.3 = local;
+        symbol [ options %options.3 436 12 19 ];
+        %tmp.20 = newd 3;
+        %tmp.22 = const :method;
+        symbol [ method %tmp.22 438 13 19 const ];
+        symbol [ Communications %tmp.23 439 16 30 ];
+        %tmp.23 = getm $.Toybox.Communications;
+        symbol [ HTTP_REQUEST_METHOD_GET %tmp.24 439 31 54 ];
+        %tmp.24 = getv %tmp.23 :HTTP_REQUEST_METHOD_GET;
+        %tmp.25 = dup %tmp.20;
+        %tmp.26 = aputv %tmp.25 %tmp.22 %tmp.24;
+        %tmp.28 = const :headers;
+        symbol [ headers %tmp.28 441 13 20 const ];
+        %tmp.29 = lgetv %headers.2;
+        symbol [ headers %tmp.29 442 16 23 ];
+        %tmp.30 = dup %tmp.26;
+        %tmp.31 = aputv %tmp.30 %tmp.28 %tmp.29;
+        %tmp.33 = const :responseType;
+        symbol [ responseType %tmp.33 444 13 25 const ];
+        symbol [ Communications %tmp.34 445 16 30 ];
+        %tmp.34 = getm $.Toybox.Communications;
+        symbol [ HTTP_RESPONSE_CONTENT_TYPE_JSON %tmp.35 445 31 62 ];
+        %tmp.35 = getv %tmp.34 :HTTP_RESPONSE_CONTENT_TYPE_JSON;
+        %tmp.36 = dup %tmp.31;
+        %tmp.37 = aputv %tmp.36 %tmp.33 %tmp.35;
+        lputv %options.3 %tmp.37;
+        symbol [ options %options.3 436 12 19 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 449 8 ]
+        symbol [ Communications %tmp.38 449 8 22 ];
+        %tmp.38 = getm $.Toybox.Communications;
+        symbol [ makeWebRequest %tmp.39 449 23 37 ];
+        %tmp.39 = getv function %tmp.38 :makeWebRequest;
+        %tmp.40 = lgetv %url.1;
+        symbol [ url %tmp.40 450 12 15 ];
+        %tmp.41 = null;
+        %tmp.42 = lgetv %options.3;
+        symbol [ options %tmp.42 452 12 19 ];
+        %tmp.43 = self;
+        symbol [ method %tmp.44 453 12 18 ];
+        %tmp.44 = getv function %tmp.43 :method;
+        %tmp.46 = const :onStatusResponse;
+        symbol [ onStatusResponse %tmp.46 453 20 36 const ];
+        %tmp.47 = invoke %tmp.43 %tmp.44(%tmp.46);
+        invoke %tmp.38 %tmp.39(%tmp.40, %tmp.41, %tmp.42, %tmp.47);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_414_16_455_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 462; @symbol_functiondef = [onStatusResponse,462,13,29]; @symbol_param<0> = [responseCode,463,8,20]; @symbol_param<0>_type<0> = [Lang,463,24,28]; @symbol_param<0>_type<1> = [Number,463,29,35]; @symbol_param<1> = [data,464,8,12]; @symbol_param<1>_type<0> = [Lang,465,12,16]; @symbol_param<1>_type<1> = [Dictionary,465,17,27]; @symbol_param<1>_type<2> = [Lang,466,12,16]; @symbol_param<1>_type<3> = [String,466,17,23]; @symbol_param<1>_type<4> = [PersistedContent,467,12,28]; @symbol_param<1>_type<5> = [Iterator,467,29,37]; ]
+    function onStatusResponse(responseCode as Lang.Number, data as Lang.Dictionary or Lang.String or PersistedContent.Iterator or Null) as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_469_14_537_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 471 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_471_8_473_8_if_stmt:
+        symbol [ _stopping %tmp.2 471 12 21 ];
+        %tmp.2 = getv ? :_stopping;
+        bf %tmp.2 @C__tedee_garmin_source_TedeeSyncDelegate_mc_471_8_473_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_471_8_473_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_471_23_473_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 472 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_471_23_473_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_471_8_473_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_471_8_473_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 476 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_476_8_489_8_if_stmt:
+        %tmp.3 = lgetv %responseCode;
+        symbol [ responseCode %tmp.3 476 12 24 ];
+        %tmp.4 = 200;
+        %tmp.5 = ne %tmp.3 %tmp.4;
+        bf %tmp.5 @C__tedee_garmin_source_TedeeSyncDelegate_mc_476_8_489_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_476_8_489_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_476_33_489_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 483 12 ]
+        %tmp.6 = self;
+        symbol [ finishFailure %tmp.7 483 12 25 ];
+        %tmp.7 = getv function %tmp.6 :finishFailure;
+        %tmp.8 = lgetv %responseCode;
+        symbol [ responseCode %tmp.8 484 16 28 ];
+        %tmp.9 = "STATUS FAILED";
+        invoke %tmp.6 %tmp.7(%tmp.8, %tmp.9);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 488 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_476_33_489_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_476_8_489_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_476_8_489_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 492 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_492_8_522_8_if_stmt:
+        %tmp.10 = lgetv %data;
+        symbol [ data %tmp.10 492 12 16 ];
+        symbol [ Lang %tmp.11 492 28 32 ];
+        %tmp.11 = getm $.Toybox.Lang;
+        symbol [ Dictionary %tmp.12 492 33 43 ];
+        %tmp.12 = getv %tmp.11 :Dictionary;
+        %tmp.13 = isa %tmp.10 %tmp.12;
+        bf %tmp.13 @C__tedee_garmin_source_TedeeSyncDelegate_mc_492_8_522_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_492_8_522_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_492_45_522_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 494 12 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_492_45_522_8_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_492_45_522_8_stop" ]
+        %response.1 = local;
+        symbol [ response %response.1 494 16 24 ];
+        %tmp.14 = lgetv %data;
+        symbol [ data %tmp.14 495 16 20 ];
+        %tmp.15 = as %tmp.14 { (Lang.Dictionary) };
+        %tmp.16 = as %tmp.15 Lang.Dictionary;
+        symbol [ Lang %tmp.16 495 24 28 ];
+        symbol [ Dictionary %tmp.16 495 29 39 ];
+        lputv %response.1 %tmp.16;
+        symbol [ response %response.1 494 16 24 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 498 12 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_492_45_522_8_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_492_45_522_8_stop" ]
+        %state.2 = local;
+        symbol [ state %state.2 498 16 21 ];
+        %tmp.17 = lgetv %response.1;
+        symbol [ response %tmp.17 499 16 24 ];
+        %tmp.18 = "state";
+        %tmp.19 = agetv %tmp.17 %tmp.18;
+        lputv %state.2 %tmp.19;
+        symbol [ state %state.2 498 16 21 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 502 12 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_502_12_508_12_if_stmt:
+        %tmp.20 = lgetv %state.2;
+        symbol [ state %tmp.20 502 16 21 ];
+        %tmp.21 = null;
+        %tmp.22 = ne %tmp.20 %tmp.21;
+        bf %tmp.22 @C__tedee_garmin_source_TedeeSyncDelegate_mc_502_12_508_12_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_502_12_508_12_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_502_31_508_12_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 504 16 ]
+        symbol [ Storage %tmp.23 504 16 23 ];
+        %tmp.23 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.24 504 24 32 ];
+        %tmp.24 = getv function %tmp.23 :setValue;
+        %tmp.25 = "tedee_state";
+        %tmp.26 = lgetv %state.2;
+        symbol [ state %tmp.26 506 20 25 ];
+        %tmp.27 = as %tmp.26 { (!Null) };
+        invoke %tmp.23 %tmp.24(%tmp.25, %tmp.27);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_502_31_508_12_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_502_12_508_12_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_502_12_508_12_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 511 12 ]
+        [ "C__tedee_garmin_source_TedeeSyncDelegate_mc_492_45_522_8_start" "C__tedee_garmin_source_TedeeSyncDelegate_mc_492_45_522_8_stop" ]
+        %battery.3 = local;
+        symbol [ battery %battery.3 511 16 23 ];
+        %tmp.28 = lgetv %response.1;
+        symbol [ response %tmp.28 512 16 24 ];
+        %tmp.29 = "batteryLevel";
+        %tmp.30 = agetv %tmp.28 %tmp.29;
+        lputv %battery.3 %tmp.30;
+        symbol [ battery %battery.3 511 16 23 ];
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 515 12 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_515_12_521_12_if_stmt:
+        %tmp.31 = lgetv %battery.3;
+        symbol [ battery %tmp.31 515 16 23 ];
+        %tmp.32 = null;
+        %tmp.33 = ne %tmp.31 %tmp.32;
+        bf %tmp.33 @C__tedee_garmin_source_TedeeSyncDelegate_mc_515_12_521_12_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_515_12_521_12_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_515_33_521_12_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 517 16 ]
+        symbol [ Storage %tmp.34 517 16 23 ];
+        %tmp.34 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.35 517 24 32 ];
+        %tmp.35 = getv function %tmp.34 :setValue;
+        %tmp.36 = "tedee_battery";
+        %tmp.37 = lgetv %battery.3;
+        symbol [ battery %tmp.37 519 20 27 ];
+        %tmp.38 = as %tmp.37 { (!Null) };
+        invoke %tmp.34 %tmp.35(%tmp.36, %tmp.38);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_515_33_521_12_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_515_12_521_12_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_515_12_521_12_if_end:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_492_45_522_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_492_8_522_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_492_8_522_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 531 8 ]
+        symbol [ Storage %tmp.39 531 8 15 ];
+        %tmp.39 = getm $.Toybox.Application.Storage;
+        symbol [ deleteValue %tmp.40 531 16 27 ];
+        %tmp.40 = getv function %tmp.39 :deleteValue;
+        %tmp.41 = "tedee_pending_action";
+        invoke %tmp.39 %tmp.40(%tmp.41);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 536 8 ]
+        %tmp.42 = self;
+        symbol [ finishSuccess %tmp.43 536 8 21 ];
+        %tmp.43 = getv function %tmp.42 :finishSuccess;
+        invoke %tmp.42 %tmp.43();
+C__tedee_garmin_source_TedeeSyncDelegate_mc_469_14_537_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 544; @symbol_functiondef = [finishSuccess,544,13,26]; ]
+    function finishSuccess() as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_545_16_571_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 547 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_547_8_549_8_if_stmt:
+        symbol [ _stopping %tmp.2 547 12 21 ];
+        %tmp.2 = getv ? :_stopping;
+        bf %tmp.2 @C__tedee_garmin_source_TedeeSyncDelegate_mc_547_8_549_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_547_8_549_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_547_23_549_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 548 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_547_23_549_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_547_8_549_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_547_8_549_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 552 8 ]
+        symbol [ Storage %tmp.3 552 8 15 ];
+        %tmp.3 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.4 552 16 24 ];
+        %tmp.4 = getv function %tmp.3 :setValue;
+        %tmp.5 = "tedee_sync_success";
+        %tmp.6 = true;
+        invoke %tmp.3 %tmp.4(%tmp.5, %tmp.6);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 558 8 ]
+        symbol [ Storage %tmp.7 558 8 15 ];
+        %tmp.7 = getm $.Toybox.Application.Storage;
+        symbol [ deleteValue %tmp.8 558 16 27 ];
+        %tmp.8 = getv function %tmp.7 :deleteValue;
+        %tmp.9 = "tedee_last_error";
+        invoke %tmp.7 %tmp.8(%tmp.9);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 563 8 ]
+        symbol [ Communications %tmp.10 563 8 22 ];
+        %tmp.10 = getm $.Toybox.Communications;
+        symbol [ notifySyncProgress %tmp.11 563 23 41 ];
+        %tmp.11 = getv function %tmp.10 :notifySyncProgress;
+        %tmp.12 = 100;
+        invoke %tmp.10 %tmp.11(%tmp.12);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 568 8 ]
+        symbol [ Communications %tmp.13 568 8 22 ];
+        %tmp.13 = getm $.Toybox.Communications;
+        symbol [ notifySyncComplete %tmp.14 568 23 41 ];
+        %tmp.14 = getv function %tmp.13 :notifySyncComplete;
+        %tmp.15 = null;
+        invoke %tmp.13 %tmp.14(%tmp.15);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_545_16_571_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 578; @symbol_functiondef = [finishFailure,578,13,26]; @symbol_param<0> = [code,579,8,12]; @symbol_param<1> = [message,580,8,15]; ]
+    function finishFailure(code, message) as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_581_14_609_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 583 8 ]
+C__tedee_garmin_source_TedeeSyncDelegate_mc_583_8_585_8_if_stmt:
+        symbol [ _stopping %tmp.2 583 12 21 ];
+        %tmp.2 = getv ? :_stopping;
+        bf %tmp.2 @C__tedee_garmin_source_TedeeSyncDelegate_mc_583_8_585_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_583_8_585_8_if_true:
+C__tedee_garmin_source_TedeeSyncDelegate_mc_583_23_585_8_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 584 12 ]
+        ret ?;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_583_23_585_8_stop:
+        goto @C__tedee_garmin_source_TedeeSyncDelegate_mc_583_8_585_8_if_end;
+C__tedee_garmin_source_TedeeSyncDelegate_mc_583_8_585_8_if_end:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 588 8 ]
+        symbol [ Storage %tmp.3 588 8 15 ];
+        %tmp.3 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.4 588 16 24 ];
+        %tmp.4 = getv function %tmp.3 :setValue;
+        %tmp.5 = "tedee_sync_success";
+        %tmp.6 = false;
+        invoke %tmp.3 %tmp.4(%tmp.5, %tmp.6);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 594 8 ]
+        symbol [ Storage %tmp.7 594 8 15 ];
+        %tmp.7 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.8 594 16 24 ];
+        %tmp.8 = getv function %tmp.7 :setValue;
+        %tmp.9 = "tedee_last_error";
+        %tmp.10 = lgetv %code;
+        symbol [ code %tmp.10 596 12 16 ];
+        invoke %tmp.7 %tmp.8(%tmp.9, %tmp.10);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 600 8 ]
+        symbol [ Storage %tmp.11 600 8 15 ];
+        %tmp.11 = getm $.Toybox.Application.Storage;
+        symbol [ setValue %tmp.12 600 16 24 ];
+        %tmp.12 = getv function %tmp.11 :setValue;
+        %tmp.13 = "tedee_last_error_message";
+        %tmp.14 = lgetv %message;
+        symbol [ message %tmp.14 602 12 19 ];
+        invoke %tmp.11 %tmp.12(%tmp.13, %tmp.14);
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 606 8 ]
+        symbol [ Communications %tmp.15 606 8 22 ];
+        %tmp.15 = getm $.Toybox.Communications;
+        symbol [ notifySyncComplete %tmp.16 606 23 41 ];
+        %tmp.16 = getv function %tmp.15 :notifySyncComplete;
+        %tmp.17 = lgetv %message;
+        symbol [ message %tmp.17 607 12 19 ];
+        invoke %tmp.15 %tmp.16(%tmp.17);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_581_14_609_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 616; @symbol_functiondef = [onStopSync,616,13,23]; ]
+    function onStopSync() as Void {
+C__tedee_garmin_source_TedeeSyncDelegate_mc_617_16_634_4_start:
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 625 8 ]
+        %tmp.1 = true;
+        symbol [ _stopping ? 625 8 17 ];
+        putv self :_stopping %tmp.1;
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 628 8 ]
+        symbol [ Communications %tmp.2 628 8 22 ];
+        %tmp.2 = getm $.Toybox.Communications;
+        symbol [ cancelAllRequests %tmp.3 628 23 40 ];
+        %tmp.3 = getv function %tmp.2 :cancelAllRequests;
+        invoke %tmp.2 %tmp.3();
+[ "C:\tedee\garmin\source\TedeeSyncDelegate.mc" 631 8 ]
+        symbol [ Communications %tmp.4 631 8 22 ];
+        %tmp.4 = getm $.Toybox.Communications;
+        symbol [ notifySyncComplete %tmp.5 631 23 41 ];
+        %tmp.5 = getv function %tmp.4 :notifySyncComplete;
+        %tmp.6 = null;
+        invoke %tmp.4 %tmp.5(%tmp.6);
+C__tedee_garmin_source_TedeeSyncDelegate_mc_617_16_634_4_stop:
+    }
+}
+[ @file = "C:\tedee\garmin\source\TedeeSyncDelegate.mc"; @line = 1; ]
+<init> {
+}

@@ -1,0 +1,75 @@
+[ @file = "C:\tedee\garmin\source\TedeeDelegate.mc"; @line = 1; @symbol_usingdef<0> = [Toybox,1,6,12]; @symbol_usingdef<1> = [WatchUi,1,13,20]; ]
+using Toybox.WatchUi;
+[ @file = "C:\tedee\garmin\source\TedeeDelegate.mc"; @line = 3; @symbol_classdef = [TedeeDelegate,3,6,19]; @symbol_extends<0> = [WatchUi,4,12,19]; @symbol_extends<1> = [BehaviorDelegate,4,20,36]; ]
+class TedeeDelegate extends WatchUi.BehaviorDelegate {
+    [ @file = "C:\tedee\garmin\source\TedeeDelegate.mc"; @line = 3; ]
+    <init> {
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeDelegate.mc"; @line = 3; ]
+    static
+    <init> {
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeDelegate.mc"; @line = 6; @position = 8; @symbol_vardef = [_view,6,8,13]; ]
+    var _view;
+    [ @file = "C:\tedee\garmin\source\TedeeDelegate.mc"; @line = 9; @symbol_functiondef = [initialize,9,13,23]; @symbol_param<0> = [view,9,24,28]; ]
+    function initialize(view) as Void {
+C__tedee_garmin_source_TedeeDelegate_mc_9_30_14_4_start:
+[ "C:\tedee\garmin\source\TedeeDelegate.mc" 11 8 ]
+        symbol [ BehaviorDelegate %tmp.2 11 8 24 ];
+        %tmp.2 = getv ? :BehaviorDelegate;
+        symbol [ initialize %tmp.3 11 25 35 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+[ "C:\tedee\garmin\source\TedeeDelegate.mc" 13 8 ]
+        %tmp.4 = lgetv %view;
+        symbol [ view %tmp.4 13 16 20 ];
+        symbol [ _view ? 13 8 13 ];
+        putv self :_view %tmp.4;
+C__tedee_garmin_source_TedeeDelegate_mc_9_30_14_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeDelegate.mc"; @line = 17; @symbol_functiondef = [onNextPage,17,13,23]; ]
+    function onNextPage() {
+C__tedee_garmin_source_TedeeDelegate_mc_17_26_22_4_start:
+[ "C:\tedee\garmin\source\TedeeDelegate.mc" 19 8 ]
+        symbol [ _view %tmp.2 19 8 13 ];
+        %tmp.2 = getv ? :_view;
+        symbol [ moveDown %tmp.3 19 14 22 ];
+        %tmp.3 = getv function %tmp.2 :moveDown;
+        invoke %tmp.2 %tmp.3();
+[ "C:\tedee\garmin\source\TedeeDelegate.mc" 21 8 ]
+        %tmp.4 = true;
+        ret %tmp.4;
+C__tedee_garmin_source_TedeeDelegate_mc_17_26_22_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeDelegate.mc"; @line = 25; @symbol_functiondef = [onPreviousPage,25,13,27]; ]
+    function onPreviousPage() {
+C__tedee_garmin_source_TedeeDelegate_mc_25_30_30_4_start:
+[ "C:\tedee\garmin\source\TedeeDelegate.mc" 27 8 ]
+        symbol [ _view %tmp.2 27 8 13 ];
+        %tmp.2 = getv ? :_view;
+        symbol [ moveUp %tmp.3 27 14 20 ];
+        %tmp.3 = getv function %tmp.2 :moveUp;
+        invoke %tmp.2 %tmp.3();
+[ "C:\tedee\garmin\source\TedeeDelegate.mc" 29 8 ]
+        %tmp.4 = true;
+        ret %tmp.4;
+C__tedee_garmin_source_TedeeDelegate_mc_25_30_30_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeDelegate.mc"; @line = 33; @symbol_functiondef = [onSelect,33,13,21]; ]
+    function onSelect() {
+C__tedee_garmin_source_TedeeDelegate_mc_33_24_38_4_start:
+[ "C:\tedee\garmin\source\TedeeDelegate.mc" 35 8 ]
+        symbol [ _view %tmp.2 35 8 13 ];
+        %tmp.2 = getv ? :_view;
+        symbol [ selectAction %tmp.3 35 14 26 ];
+        %tmp.3 = getv function %tmp.2 :selectAction;
+        invoke %tmp.2 %tmp.3();
+[ "C:\tedee\garmin\source\TedeeDelegate.mc" 37 8 ]
+        %tmp.4 = true;
+        ret %tmp.4;
+C__tedee_garmin_source_TedeeDelegate_mc_33_24_38_4_stop:
+    }
+}
+[ @file = "C:\tedee\garmin\source\TedeeDelegate.mc"; @line = 1; ]
+<init> {
+}

@@ -1,0 +1,82 @@
+[ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 1; @symbol_usingdef<0> = [Toybox,1,6,12]; @symbol_usingdef<1> = [Application,1,13,24]; ]
+using Toybox.Application;
+[ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 2; @symbol_usingdef<0> = [Toybox,2,6,12]; @symbol_usingdef<1> = [WatchUi,2,13,20]; ]
+using Toybox.WatchUi;
+[ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 3; @symbol_usingdef<0> = [Toybox,3,6,12]; @symbol_usingdef<1> = [Communications,3,13,27]; ]
+using Toybox.Communications;
+[ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 5; @symbol_classdef = [TedeeApp,5,6,14]; @symbol_extends<0> = [Application,5,23,34]; @symbol_extends<1> = [AppBase,5,35,42]; ]
+class TedeeApp extends Application.AppBase {
+    [ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 5; ]
+    <init> {
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 5; ]
+    static
+    <init> {
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 7; @symbol_functiondef = [initialize,7,13,23]; ]
+    function initialize() as Void {
+C__tedee_garmin_source_TedeeApp_mc_7_26_9_4_start:
+[ "C:\tedee\garmin\source\TedeeApp.mc" 8 8 ]
+        symbol [ AppBase %tmp.2 8 8 15 ];
+        %tmp.2 = getv ? :AppBase;
+        symbol [ initialize %tmp.3 8 16 26 ];
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+C__tedee_garmin_source_TedeeApp_mc_7_26_9_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 12; @symbol_functiondef = [onStart,12,13,20]; @symbol_param<0> = [state,12,21,26]; ]
+    function onStart(state) {
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 16; @symbol_functiondef = [onStop,16,13,19]; @symbol_param<0> = [state,16,20,25]; ]
+    function onStop(state) {
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 20; @symbol_functiondef = [getInitialView,20,13,27]; ]
+    function getInitialView() {
+C__tedee_garmin_source_TedeeApp_mc_20_30_32_4_start:
+[ "C:\tedee\garmin\source\TedeeApp.mc" 22 8 ]
+        [ "C__tedee_garmin_source_TedeeApp_mc_20_30_32_4_start" "C__tedee_garmin_source_TedeeApp_mc_20_30_32_4_stop" ]
+        %view.1 = local;
+        symbol [ view %view.1 22 12 16 ];
+        symbol [ TedeeView %tmp.4 23 16 25 ];
+        %tmp.4 = getv ? :TedeeView;
+        %tmp.1 = newc %tmp.4 ();
+        lputv %view.1 %tmp.1;
+        symbol [ view %view.1 22 12 16 ];
+[ "C:\tedee\garmin\source\TedeeApp.mc" 25 8 ]
+        [ "C__tedee_garmin_source_TedeeApp_mc_20_30_32_4_start" "C__tedee_garmin_source_TedeeApp_mc_20_30_32_4_stop" ]
+        %delegate.2 = local;
+        symbol [ delegate %delegate.2 25 12 20 ];
+        symbol [ TedeeDelegate %tmp.8 26 16 29 ];
+        %tmp.8 = getv ? :TedeeDelegate;
+        %tmp.9 = lgetv %view.1;
+        symbol [ view %tmp.9 26 30 34 ];
+        %tmp.5 = newc %tmp.8 (%tmp.9);
+        lputv %delegate.2 %tmp.5;
+        symbol [ delegate %delegate.2 25 12 20 ];
+[ "C:\tedee\garmin\source\TedeeApp.mc" 28 8 ]
+        %tmp.10 = newa 2;
+        %tmp.11 = lgetv %view.1;
+        symbol [ view %tmp.11 29 12 16 ];
+        %tmp.12 = dup %tmp.10;
+        %tmp.13 = aputv %tmp.12 0 %tmp.11;
+        %tmp.14 = lgetv %delegate.2;
+        symbol [ delegate %tmp.14 30 12 20 ];
+        %tmp.15 = dup %tmp.13;
+        %tmp.16 = aputv %tmp.15 1 %tmp.14;
+        ret %tmp.16;
+C__tedee_garmin_source_TedeeApp_mc_20_30_32_4_stop:
+    }
+    [ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 43; @symbol_functiondef = [getSyncDelegate,43,13,28]; ]
+    function getSyncDelegate() {
+C__tedee_garmin_source_TedeeApp_mc_43_31_46_4_start:
+[ "C:\tedee\garmin\source\TedeeApp.mc" 45 8 ]
+        symbol [ TedeeSyncDelegate %tmp.4 45 19 36 ];
+        %tmp.4 = getv ? :TedeeSyncDelegate;
+        %tmp.1 = newc %tmp.4 ();
+        ret %tmp.1;
+C__tedee_garmin_source_TedeeApp_mc_43_31_46_4_stop:
+    }
+}
+[ @file = "C:\tedee\garmin\source\TedeeApp.mc"; @line = 1; ]
+<init> {
+}

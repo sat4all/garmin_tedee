@@ -1,167 +1,596 @@
-using Toybox.Graphics;
+using Toybox.Application.Storage;
 using Toybox.Communications;
+using Toybox.Graphics;
 using Toybox.WatchUi;
 
+
 class TedeeView extends WatchUi.View {
-    var connectionText = "CONNECTING";
-    var lockText = "";
+
+    var connectionText = "READY";
+
+    var lockText = "UNKNOWN";
+
     var batteryText = "";
+
     var messageText = "";
-    var busy = false;
+
+    // 0 = unlock
+    // 1 = lock
+
+    var selectedAction = 0;
+
+    var syncStarted = false;
+
+
+    // ============================================================
+    // INITIALIZE
+    // ============================================================
 
     function initialize() {
+
         View.initialize();
     }
 
+
+    // ============================================================
+    // SHOW
+    // ============================================================
+
     function onShow() {
-        refresh();
+
+        syncStarted = false;
+
+        connectionText =
+            "READY";
+
+
+        loadCachedStatus();
+
+        loadActionNote();
+
+        loadLastError();
+
+
+        WatchUi.requestUpdate();
     }
 
-    function onUpdate(dc) {
-        var w = dc.getWidth();
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
-        dc.clear();
 
-        dc.drawText(w / 2, 12, Graphics.FONT_MEDIUM, "TEDEE", Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(w / 2, 48, Graphics.FONT_SMALL, connectionText, Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(w / 2, 82, Graphics.FONT_MEDIUM, lockText, Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(w / 2, 122, Graphics.FONT_SMALL, batteryText, Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(w / 2, 154, Graphics.FONT_SMALL, messageText, Graphics.TEXT_JUSTIFY_CENTER);
+    // ============================================================
+    // CACHED STATUS
+    // ============================================================
 
-        dc.drawText(w / 2, 188, Graphics.FONT_TINY, "SEL  REFRESH", Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(w / 2, 204, Graphics.FONT_TINY, "NEXT  UNLOCK", Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(w / 2, 220, Graphics.FONT_TINY, "PREV  LOCK", Graphics.TEXT_JUSTIFY_CENTER);
+    function loadCachedStatus() {
+
+        var state =
+            Storage.getValue(
+                "tedee_state"
+            );
+
+
+        var battery =
+            Storage.getValue(
+                "tedee_battery"
+            );
+
+
+        if (state != null) {
+
+            lockText =
+                TedeeConfig.stateName(
+                    state
+                );
+
+
+            // Locked -> sensible default is UNLOCK.
+
+            if (state == 6) {
+
+                selectedAction = 0;
+            }
+
+
+            // Open or partially open -> sensible default is LOCK.
+
+            if (
+                state == 2
+                || state == 3
+            ) {
+
+                selectedAction = 1;
+            }
+        }
+
+
+        if (battery != null) {
+
+            batteryText =
+                "BATTERY " +
+                battery.toString() +
+                "%";
+        }
     }
 
-    function request(path, method, callback) {
-        var options = {
-            :method => method,
-            :headers => {
-                "X-Tedee-Watch-Token" => TedeeConfig.WATCH_TOKEN,
-                "Accept" => "application/json"
-            },
-            :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-        };
 
-        Communications.makeWebRequest(
-            TedeeConfig.BASE_URL + path,
-            null,
-            options,
-            callback
+    // ============================================================
+    // ACTION RESULT
+    // ============================================================
+
+    function loadActionNote() {
+
+        var note =
+            Storage.getValue(
+                "tedee_action_note"
+            );
+
+
+        if (note == null) {
+            return;
+        }
+
+
+        var value =
+            note.toString();
+
+
+        if (
+            value.equals(
+                "already_locked"
+            )
+        ) {
+
+            messageText =
+                "ALREADY LOCKED";
+
+        } else if (
+            value.equals(
+                "already_unlocked"
+            )
+        ) {
+
+            messageText =
+                "ALREADY UNLOCKED";
+
+        } else if (
+            value.equals(
+                "lock_sent"
+            )
+        ) {
+
+            messageText =
+                "LOCK SENT";
+
+        } else if (
+            value.equals(
+                "unlock_sent"
+            )
+        ) {
+
+            messageText =
+                "UNLOCK SENT";
+
+        } else if (
+            value.equals(
+                "cooldown"
+            )
+        ) {
+
+            messageText =
+                "PLEASE WAIT";
+        }
+
+
+        Storage.deleteValue(
+            "tedee_action_note"
         );
     }
 
-    function refresh() {
-        if (busy) {
+
+    // ============================================================
+    // LAST ERROR
+    // ============================================================
+
+    function loadLastError() {
+
+        var success =
+            Storage.getValue(
+                "tedee_sync_success"
+            );
+
+
+        if (success == null) {
             return;
         }
 
-        connectionText = "READING...";
-        messageText = "";
-        WatchUi.requestUpdate();
-        request("/api/status", Communications.HTTP_REQUEST_METHOD_GET, method(:statusCallback));
+
+        if (success == true) {
+
+            Storage.deleteValue(
+                "tedee_sync_success"
+            );
+
+            Storage.deleteValue(
+                "tedee_last_error"
+            );
+
+            Storage.deleteValue(
+                "tedee_last_error_message"
+            );
+
+            return;
+        }
+
+
+        var error =
+            Storage.getValue(
+                "tedee_last_error"
+            );
+
+
+        if (error != null) {
+
+            messageText =
+                "ERROR " +
+                error.toString();
+        }
+
+
+        Storage.deleteValue(
+            "tedee_sync_success"
+        );
+
+        Storage.deleteValue(
+            "tedee_last_error"
+        );
+
+        Storage.deleteValue(
+            "tedee_last_error_message"
+        );
     }
 
-    function statusCallback(responseCode, data) {
-        if (responseCode == 200 && data != null) {
-            connectionText = "ONLINE";
 
-            var state = data["state"];
-            lockText = TedeeConfig.stateName(state);
+    // ============================================================
+    // DRAW
+    // ============================================================
 
-            if (data["batteryLevel"] != null) {
-                batteryText = "BATTERY  " + data["batteryLevel"] + "%";
+    function onUpdate(dc) {
+
+        var width =
+            dc.getWidth();
+
+
+        dc.setColor(
+            Graphics.COLOR_WHITE,
+            Graphics.COLOR_BLACK
+        );
+
+
+        dc.clear();
+
+
+        // --------------------------------------------------------
+        // TITLE
+        // --------------------------------------------------------
+
+        dc.drawText(
+            width / 2,
+            20,
+            Graphics.FONT_MEDIUM,
+            "TEDEE",
+            Graphics.TEXT_JUSTIFY_CENTER
+        );
+
+
+        // --------------------------------------------------------
+        // CONNECTION / ACTION STATE
+        // --------------------------------------------------------
+
+        dc.drawText(
+            width / 2,
+            55,
+            Graphics.FONT_SMALL,
+            connectionText,
+            Graphics.TEXT_JUSTIFY_CENTER
+        );
+
+
+        // --------------------------------------------------------
+        // LOCK STATE
+        // --------------------------------------------------------
+
+        dc.drawText(
+            width / 2,
+            90,
+            Graphics.FONT_MEDIUM,
+            lockText,
+            Graphics.TEXT_JUSTIFY_CENTER
+        );
+
+
+        // --------------------------------------------------------
+        // BATTERY
+        // --------------------------------------------------------
+
+        dc.drawText(
+            width / 2,
+            125,
+            Graphics.FONT_SMALL,
+            batteryText,
+            Graphics.TEXT_JUSTIFY_CENTER
+        );
+
+
+        // --------------------------------------------------------
+        // ACTIONS
+        // --------------------------------------------------------
+
+        if (!syncStarted) {
+
+            if (selectedAction == 0) {
+
+                dc.drawText(
+                    width / 2,
+                    160,
+                    Graphics.FONT_MEDIUM,
+                    "> UNLOCK <",
+                    Graphics.TEXT_JUSTIFY_CENTER
+                );
+
+
+                dc.drawText(
+                    width / 2,
+                    195,
+                    Graphics.FONT_SMALL,
+                    "LOCK",
+                    Graphics.TEXT_JUSTIFY_CENTER
+                );
+
             } else {
-                batteryText = "";
+
+                dc.drawText(
+                    width / 2,
+                    160,
+                    Graphics.FONT_SMALL,
+                    "UNLOCK",
+                    Graphics.TEXT_JUSTIFY_CENTER
+                );
+
+
+                dc.drawText(
+                    width / 2,
+                    195,
+                    Graphics.FONT_MEDIUM,
+                    "> LOCK <",
+                    Graphics.TEXT_JUSTIFY_CENTER
+                );
             }
+
         } else {
-            connectionText = "OFFLINE";
-            lockText = "";
-            batteryText = "";
-            messageText = "ERROR " + responseCode;
+
+            dc.drawText(
+                width / 2,
+                165,
+                Graphics.FONT_MEDIUM,
+                "STARTING WIFI",
+                Graphics.TEXT_JUSTIFY_CENTER
+            );
         }
+
+
+        // --------------------------------------------------------
+        // RESULT MESSAGE
+        // --------------------------------------------------------
+
+        if (
+            messageText != ""
+        ) {
+
+            dc.drawText(
+                width / 2,
+                225,
+                Graphics.FONT_TINY,
+                messageText,
+                Graphics.TEXT_JUSTIFY_CENTER
+            );
+        }
+    }
+
+
+    // ============================================================
+    // UP
+    // ============================================================
+
+    function moveUp() {
+
+        if (syncStarted) {
+            return;
+        }
+
+
+        selectedAction = 0;
+
+        messageText = "";
+
 
         WatchUi.requestUpdate();
     }
 
-    function lock() {
-        if (busy) {
+
+    // ============================================================
+    // DOWN
+    // ============================================================
+
+    function moveDown() {
+
+        if (syncStarted) {
             return;
         }
 
-        busy = true;
-        messageText = "LOCKING...";
+
+        selectedAction = 1;
+
+        messageText = "";
+
+
         WatchUi.requestUpdate();
-        request("/api/lock", Communications.HTTP_REQUEST_METHOD_POST, method(:actionCallback));
     }
 
-    function unlock() {
-        if (busy) {
+
+    // ============================================================
+    // SELECT
+    // ============================================================
+
+    function selectAction() {
+
+        if (syncStarted) {
             return;
         }
 
-        var dialog = new WatchUi.Confirmation("Unlock Main door?");
-        WatchUi.pushView(dialog, new TedeeUnlockConfirmationDelegate(self), WatchUi.SLIDE_IMMEDIATE);
+
+        if (selectedAction == 0) {
+
+            showUnlockConfirmation();
+
+        } else {
+
+            startWifiSync(
+                "lock"
+            );
+        }
     }
+
+
+    // ============================================================
+    // UNLOCK CONFIRMATION
+    // ============================================================
+
+    function showUnlockConfirmation() {
+
+        var dialog =
+            new WatchUi.Confirmation(
+                "Unlock Main door?"
+            );
+
+
+        WatchUi.pushView(
+            dialog,
+            new TedeeUnlockConfirmationDelegate(
+                self
+            ),
+            WatchUi.SLIDE_IMMEDIATE
+        );
+    }
+
+
+    // ============================================================
+    // CONFIRMED UNLOCK
+    // ============================================================
 
     function performUnlock() {
-        if (busy) {
+
+        startWifiSync(
+            "unlock"
+        );
+    }
+
+
+    // ============================================================
+    // START GARMIN WIFI SYNC
+    // ============================================================
+
+    function startWifiSync(action) {
+
+        if (syncStarted) {
             return;
         }
 
-        busy = true;
-        messageText = "UNLOCKING...";
-        WatchUi.requestUpdate();
-        request("/api/unlock", Communications.HTTP_REQUEST_METHOD_POST, method(:actionCallback));
-    }
 
-    function actionCallback(responseCode, data) {
-        busy = false;
+        syncStarted = true;
 
-        if (responseCode == 204 || responseCode == 200) {
-            messageText = "COMMAND SENT";
-            refreshAfterAction();
-        } else if (responseCode == 401) {
-            messageText = "UNAUTHORIZED";
-        } else if (responseCode == 429) {
-            messageText = "WAIT A MOMENT";
+
+        // Remove old result information.
+
+        Storage.deleteValue(
+            "tedee_action_note"
+        );
+
+        Storage.deleteValue(
+            "tedee_last_error"
+        );
+
+        Storage.deleteValue(
+            "tedee_last_error_message"
+        );
+
+        Storage.deleteValue(
+            "tedee_sync_success"
+        );
+
+
+        // Store command before entering Garmin sync mode.
+
+        Storage.setValue(
+            "tedee_pending_action",
+            action
+        );
+
+
+        if (
+            action.equals(
+                "lock"
+            )
+        ) {
+
+            connectionText =
+                "LOCKING";
+
         } else {
-            messageText = "ERROR " + responseCode;
+
+            connectionText =
+                "UNLOCKING";
         }
 
-        WatchUi.requestUpdate();
-    }
 
-    function refreshAfterAction() {
-        // Allow the bridge a moment to update the reported state.
-        // The user can also press SELECT for an immediate refresh.
-        request("/api/status", Communications.HTTP_REQUEST_METHOD_GET, method(:postActionStatusCallback));
-    }
+        messageText =
+            "STARTING WIFI";
 
-    function postActionStatusCallback(responseCode, data) {
-        if (responseCode == 200 && data != null) {
-            connectionText = "ONLINE";
-            lockText = TedeeConfig.stateName(data["state"]);
-            if (data["batteryLevel"] != null) {
-                batteryText = "BATTERY  " + data["batteryLevel"] + "%";
-            }
-        }
+
         WatchUi.requestUpdate();
+
+
+        Communications.startSync();
     }
 }
 
-class TedeeUnlockConfirmationDelegate extends WatchUi.ConfirmationDelegate {
-    var view;
 
-    function initialize(tedeeView) {
+// ================================================================
+// UNLOCK CONFIRMATION DELEGATE
+// ================================================================
+
+class TedeeUnlockConfirmationDelegate
+    extends WatchUi.ConfirmationDelegate {
+
+    var _view;
+
+
+    function initialize(view) {
+
         ConfirmationDelegate.initialize();
-        view = tedeeView;
+
+        _view = view;
     }
 
+
     function onResponse(response) {
-        if (response == WatchUi.CONFIRM_YES) {
-            view.performUnlock();
+
+        if (
+            response ==
+            WatchUi.CONFIRM_YES
+        ) {
+
+            _view.performUnlock();
         }
+
+
         return true;
     }
 }
