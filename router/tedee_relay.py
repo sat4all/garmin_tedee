@@ -57,7 +57,7 @@ load_env(ENV_FILE)
 
 TEDEE_BRIDGE_IP = os.environ.get(
     "TEDEE_BRIDGE_IP",
-    "192.168.1.167"
+    "x.x.x.x"
 )
 
 TEDEE_BRIDGE_PORT = os.environ.get(
@@ -80,7 +80,7 @@ WATCH_TOKEN = os.environ.get(
 PORT = int(
     os.environ.get(
         "PORT",
-        "8090"
+        "xxxx"
     )
 )
 
