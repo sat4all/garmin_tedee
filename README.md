@@ -3,59 +3,69 @@ fenix7x and marq2
 
 
 
-Tedee Lock Control from Garmin via ASUS Router (TESTED)
+Garmin Tedee Lock on ASUS GT-AX11000 Pro — Complete Router + Garmin README
 
-This guide documents the complete working setup for controlling a Tedee smart lock from a Garmin Connect IQ watch app using:
+This README documents the working setup for controlling a Tedee smart lock from a Garmin Connect IQ watch app through an ASUS GT-AX11000 Pro running Asuswrt-Merlin.
 
-Garmin fēnix 7X / MARQ Gen 2
-
-Garmin Connect IQ
-
-ASUS GT-AX11000 Pro
-
-Asuswrt-Merlin
-
-Entware
-
-Python relay service
-
-nginx HTTPS reverse proxy
-
-Tedee Bridge local API
-
-The final architecture is:
+The working network path is:
 
 Garmin Watch
     |
     | HTTPS
     v
-https://your.domain.home:9443
+https://your.home.domain:PORT
     |
     v
 nginx on ASUS router
     |
-    | HTTP localhost
+    | HTTP
     v
 127.0.0.1:PORT
     |
     v
 Python Tedee relay
     |
-    | HTTP + api_token
+    | Tedee Bridge local API
     v
-Tedee Bridge IP
-X.X.X.X:80
+IP X.X.X.X:80
     |
     v
 Tedee Smart Lock
 
-1. Working environment
+The router-side files involved are:
+
+/tmp/mnt/entwere/entware/tedee/server.py
+/tmp/mnt/entwere/entware/tedee/.env
+
+/opt/etc/init.d/S99tedeeproxy
+/opt/etc/init.d/S80nginx
+
+/opt/etc/nginx/nginx.conf
+
+/jffs/scripts/services-start
+
+/jffs/.le/your.home.domain_ecc/fullchain.pem
+/jffs/.le/your.home.domain_ecc/domain.key
+
+Important:
+
+server.py, .env, S99tedeeproxy, nginx.conf, and /jffs/scripts/services-start are the files you actively configure.
+
+/opt/etc/init.d/S80nginx is normally installed and maintained by the Entware nginx package.
+
+fullchain.pem and domain.key are generated and maintained by the router's Let's Encrypt/DDNS certificate system.
+
+Do not paste the contents of domain.key into documentation or source control.
+
+Keep all real API tokens private.
+
+1. Router and Tedee Details
 
 Router:
 
 Model: ASUS GT-AX11000 Pro
+LAN IP: X.X.X.X
 Firmware: Asuswrt-Merlin
-LAN IP: x.x.x.x
 Architecture: aarch64
 
 Entware:
@@ -68,176 +78,1108 @@ Python:
 
 Tedee Bridge:
 
-IP: x.x.x.x
+IP: X.X.X.X
 Port: 80
 
 Tedee lock:
 
-Lock ID: xxxxxx
+Lock ID: XXXXXX
 
-Public hostname and HTTPS port:
+Public hostname:
 
-your.domain.home:9443
+your.home.domain
 
-Internal Python relay port:
+nginx HTTPS port:
 
-8090
+PORT
 
-2. Tedee Bridge API
+Python relay port:
 
-The local Tedee Bridge API is used.
+PORT
 
-GET  /v1.0/lock/{deviceId}
-POST /v1.0/lock/{deviceId}/lock
-POST /v1.0/lock/{deviceId}/unlock
-POST /v1.0/lock/{deviceId}/pull
+2. Required Directory
 
-Authentication header:
-
-api_token: YOUR_TEDEE_BRIDGE_TOKEN
-
-The Bridge is configured for plain-token authentication. A successful Tedee action normally returns HTTP 204 No Content. The Python relay converts this to JSON HTTP 200, because Garmin expects JSON when HTTP_RESPONSE_CONTENT_TYPE_JSON is used.
-
-Official documentation:
-
-https://docs.tedee.com/bridge-api
-
-3. Prepare Entware and Python
-
-Check Python:
-
-/opt/bin/python3 --version
-
-Create the application directory:
+Create the Tedee relay directory:
 
 mkdir -p /tmp/mnt/entwere/entware/tedee
 
-4. Create the relay environment file
+3. /tmp/mnt/entwere/entware/tedee/.env
 
 Create:
 
 /tmp/mnt/entwere/entware/tedee/.env
 
-Example:
+Use:
 
-TEDEE_BRIDGE_IP=x.x.x.x
+TEDEE_BRIDGE_IP=X.X.X.X
 TEDEE_BRIDGE_PORT=80
-TEDEE_LOCK_ID=xxxxxx
+TEDEE_LOCK_ID=XXXXXX
 TEDEE_BRIDGE_TOKEN=YOUR_PRIVATE_TEDEE_BRIDGE_TOKEN
-WATCH_TOKEN=YOUR_PRIVATE_GARMIN_RELAY_TOKEN
-PORT=xxxx
+WATCH_TOKEN=YOUR_PRIVATE_GARMIN_WATCH_TOKEN
+PORT=XXXX
 
-Protect it:
+Protect the file:
 
 chmod 600 /tmp/mnt/entwere/entware/tedee/.env
 
-Generate a strong watch token if needed:
+Generate a new strong watch token if required:
 
 /opt/bin/python3 -c 'import secrets; print(secrets.token_urlsafe(32))'
 
-Do not publish either token.
+Never commit the real .env file to GitHub.
 
-5. Python relay
+4. /tmp/mnt/entwere/entware/tedee/server.py
 
 Create:
 
 /tmp/mnt/entwere/entware/tedee/server.py
 
-The final relay should provide:
+Use the following complete file:
 
-GET  /health
-GET  /api/status
-POST /api/lock
-POST /api/unlock
+#!/opt/bin/python3
 
-/api/status, /api/lock, and /api/unlock require:
+import json
+import os
+import time
+import threading
+import urllib.request
+import urllib.error
 
-X-Tedee-Watch-Token: YOUR_WATCH_TOKEN
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-Important handler settings:
 
-server_version = "TedeeGarmin/1.4"
-protocol_version = "HTTP/1.1"
+# ================================================================
+# CONFIG
+# ================================================================
 
-At the beginning of do_POST() consume any request body before authentication or routing:
-
-try:
-    length = int(self.headers.get("Content-Length") or 0)
-except (TypeError, ValueError):
-    length = 0
-
-if length > 0:
-    self.rfile.read(length)
-
-Every JSON response should include an accurate Content-Length.
-
-Tedee action success should be normalized:
-
-if status_code in (200, 204):
-    self.send_json(
-        200,
-        {
-            "ok": True,
-            "action": action
-        }
-    )
-
-6. Idempotent action handling
-
-The relay checks the current Tedee state before acting.
-
-Useful Tedee states:
-
-0   uncalibrated
-1   calibration
-2   open
-3   partially_open
-4   opening
-5   closing
-6   closed
-7   pull_spring
-8   pulling
-9   unknown
-255 unpulling
-
-If a LOCK request arrives while state is already 6, return:
-
-{"ok":true,"action":"lock","note":"already_locked","state":6}
-
-If an UNLOCK request arrives while state is already 2, return:
-
-{"ok":true,"action":"unlock","note":"already_unlocked","state":2}
-
-This makes retries safe and prevents a redundant request from appearing as a failure.
-
-The relay currently uses:
+ENV_FILE = "/tmp/mnt/entwere/entware/tedee/.env"
 
 ACTION_COOLDOWN = 1.0
+BRIDGE_TIMEOUT = 5
 
-Rapid repeat commands may return HTTP 429 with note: cooldown.
 
-7. Relay service
+def load_env(path):
+    if not os.path.exists(path):
+        return
 
-Create the Entware init script:
+    with open(path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+
+            if not line:
+                continue
+
+            if line.startswith("#"):
+                continue
+
+            if "=" not in line:
+                continue
+
+            key, value = line.split("=", 1)
+
+            key = key.strip()
+            value = value.strip()
+
+            if (
+                len(value) >= 2
+                and value[0] == value[-1]
+                and value[0] in ("'", '"')
+            ):
+                value = value[1:-1]
+
+            os.environ.setdefault(key, value)
+
+
+load_env(ENV_FILE)
+
+
+TEDEE_BRIDGE_IP = os.environ.get(
+    "TEDEE_BRIDGE_IP",
+    "X.X.X.X"
+)
+
+TEDEE_BRIDGE_PORT = os.environ.get(
+    "TEDEE_BRIDGE_PORT",
+    "80"
+)
+
+TEDEE_LOCK_ID = os.environ.get(
+    "TEDEE_LOCK_ID"
+)
+
+TEDEE_BRIDGE_TOKEN = os.environ.get(
+    "TEDEE_BRIDGE_TOKEN"
+)
+
+WATCH_TOKEN = os.environ.get(
+    "WATCH_TOKEN"
+)
+
+PORT = int(
+    os.environ.get(
+        "PORT",
+        "8090"
+    )
+)
+
+
+if not TEDEE_LOCK_ID:
+    raise RuntimeError(
+        "TEDEE_LOCK_ID is missing"
+    )
+
+if not TEDEE_BRIDGE_TOKEN:
+    raise RuntimeError(
+        "TEDEE_BRIDGE_TOKEN is missing"
+    )
+
+if not WATCH_TOKEN:
+    raise RuntimeError(
+        "WATCH_TOKEN is missing"
+    )
+
+
+BRIDGE_BASE = (
+    f"http://{TEDEE_BRIDGE_IP}:"
+    f"{TEDEE_BRIDGE_PORT}"
+)
+
+
+# ================================================================
+# ACTION CONTROL
+# ================================================================
+
+action_mutex = threading.Lock()
+last_action_time = 0.0
+
+
+# ================================================================
+# BRIDGE HELPERS
+# ================================================================
+
+def bridge_headers():
+    return {
+        "Accept": "application/json",
+        "api_token": TEDEE_BRIDGE_TOKEN,
+    }
+
+
+def bridge_get_status():
+
+    url = (
+        f"{BRIDGE_BASE}/v1.0/lock/"
+        f"{TEDEE_LOCK_ID}"
+    )
+
+    request = urllib.request.Request(
+        url,
+        method="GET",
+        headers=bridge_headers()
+    )
+
+    with urllib.request.urlopen(
+        request,
+        timeout=BRIDGE_TIMEOUT
+    ) as response:
+
+        body = response.read()
+
+        if not body:
+            return {}
+
+        return json.loads(
+            body.decode("utf-8")
+        )
+
+
+def bridge_action(action):
+
+    url = (
+        f"{BRIDGE_BASE}/v1.0/lock/"
+        f"{TEDEE_LOCK_ID}/{action}"
+    )
+
+    request = urllib.request.Request(
+        url,
+        data=b"",
+        method="POST",
+        headers=bridge_headers()
+    )
+
+    try:
+
+        with urllib.request.urlopen(
+            request,
+            timeout=BRIDGE_TIMEOUT
+        ) as response:
+
+            return (
+                response.status,
+                response.read()
+            )
+
+    except urllib.error.HTTPError as exc:
+
+        return (
+            exc.code,
+            exc.read()
+        )
+
+
+# ================================================================
+# HTTP SERVER
+# ================================================================
+
+class TedeeHandler(BaseHTTPRequestHandler):
+
+    server_version = "TedeeGarmin/1.4"
+    protocol_version = "HTTP/1.1"
+
+
+    # ------------------------------------------------------------
+    # JSON RESPONSE
+    # ------------------------------------------------------------
+
+    def send_json(self, status_code, payload):
+
+        body = json.dumps(
+            payload,
+            separators=(",", ":")
+        ).encode("utf-8")
+
+        self.send_response(
+            status_code
+        )
+
+        self.send_header(
+            "Content-Type",
+            "application/json; charset=utf-8"
+        )
+
+        self.send_header(
+            "Content-Length",
+            str(len(body))
+        )
+
+        self.send_header(
+            "Cache-Control",
+            "no-store"
+        )
+
+        self.end_headers()
+
+        self.wfile.write(body)
+
+
+    # ------------------------------------------------------------
+    # AUTH
+    # ------------------------------------------------------------
+
+    def authorized(self):
+
+        token = self.headers.get(
+            "X-Tedee-Watch-Token"
+        )
+
+        return token == WATCH_TOKEN
+
+
+    def require_auth(self):
+
+        if self.authorized():
+            return True
+
+        self.send_json(
+            401,
+            {
+                "ok": False,
+                "error": "unauthorized"
+            }
+        )
+
+        return False
+
+
+    # ------------------------------------------------------------
+    # GET
+    # ------------------------------------------------------------
+
+    def do_GET(self):
+
+        if self.path == "/health":
+
+            self.send_json(
+                200,
+                {
+                    "ok": True,
+                    "service": "tedee-garmin"
+                }
+            )
+
+            return
+
+
+        if self.path == "/api/status":
+
+            if not self.require_auth():
+                return
+
+            try:
+
+                status = bridge_get_status()
+
+                self.send_json(
+                    200,
+                    status
+                )
+
+            except Exception as exc:
+
+                self.send_json(
+                    502,
+                    {
+                        "ok": False,
+                        "error": "bridge_status_failed",
+                        "message": str(exc)
+                    }
+                )
+
+            return
+
+
+        self.send_json(
+            404,
+            {
+                "ok": False,
+                "error": "not_found"
+            }
+        )
+
+
+    # ------------------------------------------------------------
+    # POST
+    # ------------------------------------------------------------
+
+    def do_POST(self):
+
+        # Consume any request body before auth/routing.
+        # This keeps persistent HTTP/1.1 connections clean.
+
+        try:
+
+            length = int(
+                self.headers.get(
+                    "Content-Length"
+                ) or 0
+            )
+
+        except (TypeError, ValueError):
+
+            length = 0
+
+
+        if length > 0:
+
+            self.rfile.read(
+                length
+            )
+
+
+        # Auth
+
+        if not self.require_auth():
+            return
+
+
+        # Routes
+
+        if self.path == "/api/lock":
+
+            self.handle_action(
+                "lock"
+            )
+
+            return
+
+
+        if self.path == "/api/unlock":
+
+            self.handle_action(
+                "unlock"
+            )
+
+            return
+
+
+        self.send_json(
+            404,
+            {
+                "ok": False,
+                "error": "not_found"
+            }
+        )
+
+
+    # ------------------------------------------------------------
+    # LOCK / UNLOCK
+    # ------------------------------------------------------------
+
+    def handle_action(self, action):
+
+        global last_action_time
+
+
+        # --------------------------------------------------------
+        # CHECK CURRENT LOCK STATE FIRST
+        #
+        # Important states:
+        # 2 = open / unlocked
+        # 6 = closed / locked
+        #
+        # Redundant commands become successful no-ops.
+        # --------------------------------------------------------
+
+        try:
+
+            current = bridge_get_status()
+
+            state = current.get(
+                "state"
+            )
+
+        except Exception as exc:
+
+            self.send_json(
+                502,
+                {
+                    "ok": False,
+                    "action": action,
+                    "error": "status_check_failed",
+                    "message": str(exc)
+                }
+            )
+
+            return
+
+
+        # Already locked
+
+        if (
+            action == "lock"
+            and state == 6
+        ):
+
+            self.send_json(
+                200,
+                {
+                    "ok": True,
+                    "action": "lock",
+                    "note": "already_locked",
+                    "state": 6
+                }
+            )
+
+            return
+
+
+        # Already unlocked
+
+        if (
+            action == "unlock"
+            and state == 2
+        ):
+
+            self.send_json(
+                200,
+                {
+                    "ok": True,
+                    "action": "unlock",
+                    "note": "already_unlocked",
+                    "state": 2
+                }
+            )
+
+            return
+
+
+        # --------------------------------------------------------
+        # COOLDOWN
+        # --------------------------------------------------------
+
+        with action_mutex:
+
+            now = time.monotonic()
+
+            elapsed = (
+                now -
+                last_action_time
+            )
+
+
+            if elapsed < ACTION_COOLDOWN:
+
+                self.send_json(
+                    429,
+                    {
+                        "ok": False,
+                        "action": action,
+                        "note": "cooldown",
+                        "retryAfter": round(
+                            ACTION_COOLDOWN - elapsed,
+                            2
+                        )
+                    }
+                )
+
+                return
+
+
+            last_action_time = now
+
+
+        # --------------------------------------------------------
+        # SEND ACTION TO TEDEE BRIDGE
+        # --------------------------------------------------------
+
+        try:
+
+            status_code, body = (
+                bridge_action(
+                    action
+                )
+            )
+
+        except Exception as exc:
+
+            self.send_json(
+                502,
+                {
+                    "ok": False,
+                    "action": action,
+                    "error": "bridge_action_failed",
+                    "message": str(exc)
+                }
+            )
+
+            return
+
+
+        # --------------------------------------------------------
+        # SUCCESS
+        #
+        # Tedee normally returns HTTP 204 No Content.
+        # Garmin expects JSON, so normalize to HTTP 200 JSON.
+        # --------------------------------------------------------
+
+        if status_code in (
+            200,
+            204
+        ):
+
+            self.send_json(
+                200,
+                {
+                    "ok": True,
+                    "action": action
+                }
+            )
+
+            return
+
+
+        # --------------------------------------------------------
+        # RACE / RETRY PROTECTION
+        #
+        # Recheck state before treating a Bridge rejection as a
+        # real failure.
+        # --------------------------------------------------------
+
+        try:
+
+            current = bridge_get_status()
+
+            new_state = current.get(
+                "state"
+            )
+
+
+            if (
+                action == "lock"
+                and new_state == 6
+            ):
+
+                self.send_json(
+                    200,
+                    {
+                        "ok": True,
+                        "action": "lock",
+                        "note": "already_locked",
+                        "state": 6
+                    }
+                )
+
+                return
+
+
+            if (
+                action == "unlock"
+                and new_state == 2
+            ):
+
+                self.send_json(
+                    200,
+                    {
+                        "ok": True,
+                        "action": "unlock",
+                        "note": "already_unlocked",
+                        "state": 2
+                    }
+                )
+
+                return
+
+
+        except Exception:
+            pass
+
+
+        # --------------------------------------------------------
+        # REAL BRIDGE FAILURE
+        # --------------------------------------------------------
+
+        bridge_message = ""
+
+
+        if body:
+
+            try:
+
+                bridge_message = body.decode(
+                    "utf-8",
+                    errors="replace"
+                )
+
+            except Exception:
+
+                bridge_message = ""
+
+
+        self.send_json(
+            status_code,
+            {
+                "ok": False,
+                "action": action,
+                "error": "bridge_rejected",
+                "bridgeStatus": status_code,
+                "message": bridge_message
+            }
+        )
+
+
+    # ------------------------------------------------------------
+    # LOGGING
+    # ------------------------------------------------------------
+
+    def log_message(
+        self,
+        fmt,
+        *args
+    ):
+
+        print(
+            "%s - %s" %
+            (
+                self.address_string(),
+                fmt % args
+            ),
+            flush=True
+        )
+
+
+# ================================================================
+# START SERVER
+# ================================================================
+
+if __name__ == "__main__":
+
+    server = ThreadingHTTPServer(
+        (
+            "0.0.0.0",
+            PORT
+        ),
+        TedeeHandler
+    )
+
+    print(
+        "Tedee Garmin relay listening on "
+        f"0.0.0.0:{PORT}",
+        flush=True
+    )
+
+    server.serve_forever()
+
+Make executable:
+
+chmod +x /tmp/mnt/entwere/entware/tedee/server.py
+
+5. /opt/etc/init.d/S99tedeeproxy
+
+Create:
 
 /opt/etc/init.d/S99tedeeproxy
 
-It should launch:
+Use:
 
-/opt/bin/python3 /tmp/mnt/entwere/entware/tedee/server.py
+#!/bin/sh
 
-Useful commands:
+ENABLED=yes
+
+PROCS=tedeeproxy
+ARGS=""
+PREARGS=""
+DESC="Tedee Garmin relay"
+
+PYTHON="/opt/bin/python3"
+SCRIPT="/tmp/mnt/entwere/entware/tedee/server.py"
+
+PIDFILE="/opt/var/run/tedeeproxy.pid"
+LOGFILE="/opt/var/log/tedeeproxy.log"
+
+
+start() {
+    echo "Starting ${DESC}..."
+
+    if [ -f "$PIDFILE" ]; then
+        PID="$(cat "$PIDFILE")"
+
+        if kill -0 "$PID" 2>/dev/null; then
+            echo "${DESC} already running with PID $PID"
+            return 0
+        fi
+
+        rm -f "$PIDFILE"
+    fi
+
+    mkdir -p /opt/var/run
+    mkdir -p /opt/var/log
+
+    "$PYTHON" "$SCRIPT" >> "$LOGFILE" 2>&1 &
+
+    PID=$!
+
+    echo "$PID" > "$PIDFILE"
+
+    sleep 1
+
+    if kill -0 "$PID" 2>/dev/null; then
+        echo "${DESC} started with PID $PID"
+        return 0
+    fi
+
+    echo "Failed to start ${DESC}"
+    rm -f "$PIDFILE"
+    return 1
+}
+
+
+stop() {
+    echo "Stopping ${DESC}..."
+
+    if [ ! -f "$PIDFILE" ]; then
+        echo "${DESC} is not running"
+        return 0
+    fi
+
+    PID="$(cat "$PIDFILE")"
+
+    if kill -0 "$PID" 2>/dev/null; then
+        kill "$PID"
+
+        COUNT=0
+
+        while kill -0 "$PID" 2>/dev/null; do
+            COUNT=$((COUNT + 1))
+
+            if [ "$COUNT" -ge 10 ]; then
+                kill -9 "$PID" 2>/dev/null
+                break
+            fi
+
+            sleep 1
+        done
+    fi
+
+    rm -f "$PIDFILE"
+
+    echo "${DESC} stopped"
+}
+
+
+restart() {
+    stop
+    sleep 1
+    start
+}
+
+
+status() {
+    if [ -f "$PIDFILE" ]; then
+        PID="$(cat "$PIDFILE")"
+
+        if kill -0 "$PID" 2>/dev/null; then
+            echo "${DESC} is running with PID $PID"
+            return 0
+        fi
+    fi
+
+    echo "${DESC} is not running"
+    return 1
+}
+
+
+check() {
+    status
+}
+
+
+case "$1" in
+    start)
+        start
+        ;;
+
+    stop)
+        stop
+        ;;
+
+    restart)
+        restart
+        ;;
+
+    status)
+        status
+        ;;
+
+    check)
+        check
+        ;;
+
+    *)
+        echo "Usage: $0 {start|stop|restart|status|check}"
+        exit 1
+        ;;
+esac
+
+Make executable:
+
+chmod +x /opt/etc/init.d/S99tedeeproxy
+
+Create log/run directories if they do not exist:
+
+mkdir -p /opt/var/log
+mkdir -p /opt/var/run
+
+Test:
 
 /opt/etc/init.d/S99tedeeproxy start
-/opt/etc/init.d/S99tedeeproxy stop
-/opt/etc/init.d/S99tedeeproxy restart
+
+Check:
+
 /opt/etc/init.d/S99tedeeproxy status
 
-Relay log:
+Restart:
+
+/opt/etc/init.d/S99tedeeproxy restart
+
+Log:
 
 tail -f /opt/var/log/tedeeproxy.log
 
-8. Start Entware and relay automatically
+6. /opt/etc/init.d/S80nginx
+
+This file is normally supplied by the Entware nginx package.
+
+Path:
+
+/opt/etc/init.d/S80nginx
+
+You normally do NOT need to replace or manually recreate it.
+
+Verify it exists:
+
+ls -l /opt/etc/init.d/S80nginx
+
+Useful commands:
+
+/opt/etc/init.d/S80nginx start
+/opt/etc/init.d/S80nginx stop
+/opt/etc/init.d/S80nginx restart
+
+Validate nginx before restarting:
+
+/opt/sbin/nginx -t
+
+If S80nginx is missing, install/reinstall the Entware nginx package rather than copying an unknown service script from another router.
+
+7. /opt/etc/nginx/nginx.conf
+
+Create or replace:
+
+/opt/etc/nginx/nginx.conf
+
+with:
+
+user nobody nobody;
+
+worker_processes  1;
+
+error_log  /opt/var/log/nginx/error.log;
+
+pid        /opt/var/run/nginx.pid;
+
+
+events {
+    worker_connections  256;
+}
+
+
+http {
+
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    access_log  /opt/var/log/nginx/access.log;
+
+    sendfile        on;
+
+    keepalive_timeout  65;
+
+
+    server {
+
+        listen PORT ssl;
+        server_name your.home.domain;
+
+
+        ssl_certificate
+            /jffs/.le/your.home.domain_ecc/fullchain.pem;
+
+        ssl_certificate_key
+            /jffs/.le/your.home.domain_ecc/domain.key;
+
+
+        # --------------------------------------------------------
+        # Health
+        # --------------------------------------------------------
+
+        location = /health {
+
+            proxy_pass http://127.0.0.1:PORT/health;
+
+            proxy_http_version 1.1;
+
+            proxy_pass_request_headers on;
+
+            proxy_set_header Host $host;
+
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+
+
+        # --------------------------------------------------------
+        # Tedee status
+        # --------------------------------------------------------
+
+        location = /api/status {
+
+            proxy_pass http://127.0.0.1:PORT/api/status;
+
+            proxy_http_version 1.1;
+
+            proxy_pass_request_headers on;
+
+            proxy_set_header Host $host;
+
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+
+
+        # --------------------------------------------------------
+        # Tedee LOCK
+        # --------------------------------------------------------
+
+        location = /api/lock {
+
+            proxy_pass http://127.0.0.1:PORT/api/lock;
+
+            proxy_http_version 1.1;
+
+            proxy_pass_request_headers on;
+
+            proxy_set_header Host $host;
+
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+
+
+        # --------------------------------------------------------
+        # Tedee UNLOCK
+        # --------------------------------------------------------
+
+        location = /api/unlock {
+
+            proxy_pass http://127.0.0.1:PORT/api/unlock;
+
+            proxy_http_version 1.1;
+
+            proxy_pass_request_headers on;
+
+            proxy_set_header Host $host;
+
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+
+
+        # --------------------------------------------------------
+        # Everything else
+        # --------------------------------------------------------
+
+        location / {
+
+            return 404;
+        }
+    }
+}
+
+Create log directory if required:
+
+mkdir -p /opt/var/log/nginx
+
+Validate:
+
+/opt/sbin/nginx -t
+
+Expected:
+
+syntax is ok
+test is successful
+
+Restart:
+
+/opt/etc/init.d/S80nginx restart
+
+Check:
+
+netstat -lntp | grep PORT
+
+Monitor access log:
+
+tail -f /opt/var/log/nginx/access.log
+
+Monitor nginx errors:
+
+tail -f /opt/var/log/nginx/error.log
+
+8. /jffs/scripts/services-start
 
 Create or edit:
 
@@ -246,22 +1188,127 @@ Create or edit:
 Use:
 
 #!/bin/sh
+
+# Start Entware
 /opt/etc/init.d/rc.unslung start
 
-# Start Entware Tedee relay.
+# Start Tedee Garmin relay
 /opt/etc/init.d/S99tedeeproxy start
 
 Make executable:
 
 chmod +x /jffs/scripts/services-start
 
-Do not add duplicate Tedee startup lines.
+Important:
 
-9. Test the relay locally
+rc.unslung start starts Entware init scripts, including nginx if S80nginx is enabled.
+
+Therefore you normally do not need to add another explicit:
+
+/opt/etc/init.d/S80nginx start
+
+line.
+
+Also do not add a second Tedee relay startup line if S99tedeeproxy is already being started explicitly.
+
+9. /jffs/.le/your.home.domain_ecc/fullchain.pem
+
+Path:
+
+/jffs/.le/your.home.domain_ecc/fullchain.pem
+
+This is the Let's Encrypt certificate chain used by nginx.
+
+Check it exists:
+
+ls -l /jffs/.le/your.home.domain_ecc/fullchain.pem
+
+Inspect the certificate:
+
+openssl x509 \
+  -in /jffs/.le/your.home.domain_ecc/fullchain.pem \
+  -noout \
+  -subject \
+  -issuer \
+  -dates
+
+The certificate must cover:
+
+homeie.hopto.org
+
+Do not manually replace this file with arbitrary certificate text unless you know exactly what you are doing.
+
+The router's certificate/DDNS system should manage renewal.
+
+10. /jffs/.le/your.home.domain_ecc/domain.key
+
+Path:
+
+/jffs/.le/your.home.domain_ecc/domain.key
+
+This is the private TLS key for the certificate.
+
+Check it exists:
+
+ls -l /jffs/.le/your.home.domain_ecc/domain.key
+
+nginx references it as:
+
+ssl_certificate_key
+    /jffs/.le/your.home.domain_ecc/domain.key;
+
+IMPORTANT:
+
+Never paste the contents of this file into:
+
+README files
+
+GitHub
+
+forums
+
+ChatGPT
+
+screenshots
+
+email
+
+source repositories
+
+The path belongs in documentation; the private key contents do not.
+
+11. Start Order
+
+The required startup sequence is:
+
+ASUS boots
+    |
+    v
+/jffs/scripts/services-start
+    |
+    v
+/opt/etc/init.d/rc.unslung start
+    |
+    +--> Entware nginx / S80nginx
+    |
+    v
+/opt/etc/init.d/S99tedeeproxy start
+    |
+    v
+Python relay listens on 8090
+    |
+    v
+nginx listens on 9443
+
+12. Test Python Relay Directly
 
 Health:
 
 curl -i http://127.0.0.1:PORT/health
+
+Expected:
+
+HTTP/1.1 200 OK
 
 Status:
 
@@ -283,346 +1330,238 @@ curl -i \
   -H "X-Tedee-Watch-Token: YOUR_WATCH_TOKEN" \
   http://127.0.0.1:PORT/api/unlock
 
-10. nginx HTTPS reverse proxy
+13. Test nginx HTTPS
 
-Check nginx:
+From Windows:
 
-/opt/sbin/nginx -V
-
-The working configuration uses:
-
-user nobody nobody;
-
-because nogroup is not available on this router.
-
-The ASUS Let's Encrypt certificate is for:
-
-homeie.hopto.org
-
-Certificate files:
-
-/jffs/.le/homeie.hopto.org_ecc/domain.key
-/jffs/.le/homeie.hopto.org_ecc/fullchain.pem
-/jffs/.le/homeie.hopto.org_ecc/homeie.hopto.org.key
-
-Use the hostname covered by the certificate:
-
-https://your.domain.home:PORT
-
-Do not use the router IP as the public Garmin URL if the certificate is only issued for the hostname.
-
-Conceptual nginx server block:
-
-server {
-    listen PORT ssl;
-    server_name your.domain.home;
-
-    ssl_certificate /jffs/.le/your.domain.home_ecc/fullchain.pem;
-    ssl_certificate_key /jffs/.le/your.domain.homeecc/domain.key;
-
-    location / {
-        proxy_pass http://127.0.0.1:PORT;
-        proxy_http_version 1.1;
-        proxy_pass_request_headers on;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-
-Validate and restart:
-
-/opt/sbin/nginx -t
-/opt/etc/init.d/S80nginx restart
-
-Check port PORT:
-
-netstat -lntp | grep PORT
-
-11. Test HTTPS from Windows
-
-Health:
-
-curl.exe -i https://your.domain.home:PORT/health
+curl.exe -i https://your.home.domain:PORT/health
 
 Status:
 
 curl.exe -i `
   -H "X-Tedee-Watch-Token: YOUR_WATCH_TOKEN" `
-  https://your.domain.home:PORT/api/status
+  https://your.home.domain:PORT/api/status
 
-Expected:
+Lock:
 
-HTTP/1.1 200 OK
+curl.exe -i `
+  -X POST `
+  -H "X-Tedee-Watch-Token: YOUR_WATCH_TOKEN" `
+  https://your.home.domain:PORT/api/lock
+
+Unlock:
+
+curl.exe -i `
+  -X POST `
+  -H "X-Tedee-Watch-Token: YOUR_WATCH_TOKEN" `
+  https://your.home.domain:PORT/api/unlock
+
+14. Expected Relay Responses
+
+Normal successful unlock:
+
+{
+  "ok": true,
+  "action": "unlock"
+}
+
+Normal successful lock:
+
+{
+  "ok": true,
+  "action": "lock"
+}
+
+Already locked:
+
+{
+  "ok": true,
+  "action": "lock",
+  "note": "already_locked",
+  "state": 6
+}
+
+Already unlocked:
+
+{
+  "ok": true,
+  "action": "unlock",
+  "note": "already_unlocked",
+  "state": 2
+}
+
+Cooldown:
+
+{
+  "ok": false,
+  "action": "lock",
+  "note": "cooldown",
+  "retryAfter": 0.5
+}
+
+15. Why server.py Uses HTTP/1.1
+
+The handler contains:
+
+protocol_version = "HTTP/1.1"
+
+and every JSON response contains a correct:
+
+Content-Length
+
+The POST handler also consumes any incoming request body:
+
+length = int(
+    self.headers.get(
+        "Content-Length"
+    ) or 0
+)
+
+if length > 0:
+    self.rfile.read(length)
+
+This prevents unread POST body data from interfering with a later request when Garmin reuses an HTTP/1.1 connection.
+
+16. Why Tedee 204 Is Converted to JSON 200
+
+Tedee normally responds to a successful lock/unlock command with:
+
+204 No Content
+
+Garmin uses:
+
+HTTP_RESPONSE_CONTENT_TYPE_JSON
+
+so an empty 204 response can be inconvenient for the Connect IQ callback.
+
+The relay therefore converts:
+
+Tedee Bridge:
+204 No Content
+
+to:
+
+Relay:
+200 OK
 Content-Type: application/json
 
-12. Garmin Connect IQ project
+{"ok":true,"action":"unlock"}
 
-Example location:
+17. Why the Relay Checks Current State First
 
-C:\tedee\garmin
+The relay makes actions idempotent.
 
-Project layout:
+If the lock is already locked:
+
+state = 6
+
+and Garmin sends:
+
+LOCK
+
+the relay returns:
+
+200 OK
+already_locked
+
+instead of asking Tedee to perform an unnecessary lock operation.
+
+Likewise:
+
+state = 2
+UNLOCK request
+
+becomes:
+
+200 OK
+already_unlocked
+
+This is particularly useful because Garmin sync operations may be retried.
+
+18. Tedee Auto-Lock
+
+If Tedee has:
+
+autoLockEnabled = 1
+
+with a delay of:
+
+300 seconds
+
+the lock will automatically re-lock after five minutes.
+
+This means a later manual LOCK request may arrive when the lock is already secure.
+
+The relay's already_locked handling makes that situation appear correctly as success instead of an error.
+
+19. Action Cooldown
+
+The relay currently uses:
+
+ACTION_COOLDOWN = 1.0
+
+Rapid repeated commands may return:
+
+HTTP 429
+
+with:
+
+{
+  "note": "cooldown"
+}
+
+The Garmin app should map this to:
+
+PLEASE WAIT
+
+rather than treating it as a serious lock failure.
+
+20. Garmin Project Files
+
+The Garmin source is separate from the router files.
+
+Typical structure:
 
 C:\tedee\garmin\
+│
 ├── manifest.xml
 ├── monkey.jungle
+│
 ├── source\
 │   ├── TedeeApp.mc
 │   ├── TedeeConfig.mc
 │   ├── TedeeDelegate.mc
 │   ├── TedeeSyncDelegate.mc
 │   └── TedeeView.mc
-├── resources\
-│   ├── strings\strings.xml
-│   └── drawables\launcher_icon.xml
+│
 ├── resources-fenix7x\
 │   └── drawables\
 │       ├── launcher_icon.xml
 │       └── launcher_icon_40x40.png
+│
 └── resources-marq2\
     └── drawables\
         ├── launcher_icon.xml
         └── launcher_icon_60x60.png
 
-13. Garmin manifest
+Garmin endpoint:
 
-Use Garmin device IDs:
+https://homeie.hopto.org:9443
 
-fenix7x
-marq2
+Garmin sends:
 
-MARQ Gen 2 Adventurer uses marq2, not marq2adventurer.
+X-Tedee-Watch-Token
 
-Example manifest:
+with requests.
 
-<?xml version="1.0"?>
-<iq:manifest version="3" xmlns:iq="http://www.garmin.com/xml/connectiq">
-  <iq:application
-      id="7f3a9c2e4b1d6a809e5c72f314ab6802"
-      type="watch-app"
-      name="@Strings.AppName"
-      entry="TedeeApp"
-      launcherIcon="@Drawables.LauncherIcon">
-    <iq:products>
-      <iq:product id="fenix7x"/>
-      <iq:product id="marq2"/>
-    </iq:products>
-    <iq:permissions>
-      <iq:uses-permission id="Communications"/>
-    </iq:permissions>
-    <iq:languages>
-      <iq:language>eng</iq:language>
-    </iq:languages>
-  </iq:application>
-</iq:manifest>
-
-14. Garmin strings and launcher icons
-
-resources\strings\strings.xml:
-
-<?xml version="1.0" encoding="UTF-8"?>
-<strings>
-    <string id="AppName">Tedee Lock</string>
-</strings>
-
-fēnix 7X launcher icon:
-
-40 x 40 PNG
-
-MARQ Gen 2 launcher icon:
-
-60 x 60 PNG
-
-fēnix resource XML:
-
-<?xml version="1.0"?>
-<drawables>
-    <bitmap id="LauncherIcon" filename="launcher_icon_40x40.png"/>
-</drawables>
-
-MARQ resource XML:
-
-<?xml version="1.0"?>
-<drawables>
-    <bitmap id="LauncherIcon" filename="launcher_icon_60x60.png"/>
-</drawables>
-
-15. TedeeConfig.mc
-
-Use:
-
-module TedeeConfig {
-    const BASE_URL = "https://your.domain.home:PORT";
-    const WATCH_TOKEN = "YOUR_PRIVATE_WATCH_TOKEN";
-
-    function stateName(state) {
-        var names = {
-            0 => "Uncalibrated",
-            1 => "Calibration",
-            2 => "Open",
-            3 => "Partially open",
-            4 => "Opening",
-            5 => "Closing",
-            6 => "Closed",
-            7 => "Pull spring",
-            8 => "Pulling",
-            9 => "Unknown",
-            255 => "Unpulling"
-        };
-
-        return names[state] != null ? names[state] : "State " + state;
-    }
-}
-
-Keep the real token private.
-
-16. Garmin controls
-
-UP / PREV     -> select UNLOCK
-DOWN / NEXT   -> select LOCK
-SELECT        -> execute selected action
-
-UNLOCK requires confirmation.
-
-The app uses cached state to choose the sensible default:
-
-state 6 -> UNLOCK
-state 2 -> LOCK
-state 3 -> LOCK
-
-17. Garmin sync architecture
-
-For phone-independent operation, perform the requests in Garmin sync mode:
-
-User presses LOCK / UNLOCK
-        |
-        v
-Store tedee_pending_action
-        |
-        v
-Communications.startSync()
-        |
-        v
-Garmin launches sync mode
-        |
-        v
-getSyncDelegate()
-        |
-        v
-TedeeSyncDelegate.onStartSync()
-        |
-        v
-POST /api/lock or /api/unlock
-        |
-        v
-GET /api/status
-        |
-        v
-Store state and battery
-        |
-        v
-notifySyncComplete()
-
-18. Important Monkey C details
-
-Correct makeWebRequest() callback type:
-
-function onStatusResponse(
-    responseCode as Lang.Number,
-    data as
-        Lang.Dictionary or
-        Lang.String or
-        PersistedContent.Iterator or
-        Null
-) as Void
-
-Imports:
-
-using Toybox.Lang;
-using Toybox.PersistedContent;
-
-For typed Wi-Fi callback dictionaries, use:
-
-function onWifiChecked(
-    result as {
-        :wifiAvailable as Lang.Boolean,
-        :errorCode as Communications.WifiConnectionStatus
-    }
-) as Void
-
-Use .equals() for command strings:
-
-_action.equals("lock")
-_action.equals("unlock")
-
-Use the sync delegate override without forcing a return type if the SDK rejects it:
-
-function getSyncDelegate() {
-    return new TedeeSyncDelegate();
-}
-
-Avoid double sync completion. In onStopSync():
-
-_stopping = true;
-Communications.cancelAllRequests();
-Communications.notifySyncComplete(null);
-
-Callbacks should begin with:
-
-if (_stopping) {
-    return;
-}
-
-19. Garmin action-result mapping
-
-Relay response notes:
-
-already_locked   -> ALREADY LOCKED
-already_unlocked -> ALREADY UNLOCKED
-cooldown         -> PLEASE WAIT
-
-Normal action responses remain successful JSON responses.
-
-20. Garmin error codes encountered
-
--104  BLE_CONNECTION_UNAVAILABLE
-
-Observed when foreground transport could not use Bluetooth.
-
--1001 SECURE_CONNECTION_REQUIRED
-
-Solved by HTTPS through nginx.
-
--1002 UNSUPPORTED_CONTENT_TYPE_IN_RESPONSE
-
-Avoided by converting Tedee 204 No Content to relay JSON 200.
-
--300 NETWORK_REQUEST_TIMED_OUT
-
-Observed during foreground request testing. Sync mode was used for reliable phone-independent operation.
-
-21. Garmin Wi-Fi recommendations
-
-Use a compatible 2.4 GHz SSID, for example:
-
-SSID: Garmin24
-Band: 2.4 GHz
-Mode: b/g/n
-Wi-Fi 6 / 802.11ax: OFF
-Bandwidth: 20 MHz
-Channel: 1-11
-Security: WPA2-Personal
-Encryption: AES
-Hidden SSID: NO
-Smart Connect: OFF for this SSID
-
-22. Build the Garmin app
+21. Garmin Build Commands
 
 fēnix 7X:
 
 cd C:\tedee\garmin
 
-monkeyc -f monkey.jungle `
+monkeyc `
+  -f monkey.jungle `
   -o bin\Tedee-fenix7.prg `
   -y C:\tedee\developer_key `
   -d fenix7x `
@@ -632,23 +1571,28 @@ MARQ Gen 2:
 
 cd C:\tedee\garmin
 
-monkeyc -f monkey.jungle `
+monkeyc `
+  -f monkey.jungle `
   -o bin\Tedee-marq2.prg `
   -y C:\tedee\developer_key `
   -d marq2 `
   -w
 
-23. Monitor nginx and relay logs
+22. Monitoring
 
-nginx:
+nginx access log:
 
 tail -f /opt/var/log/nginx/access.log
 
-A watch request looks similar to:
+nginx error log:
 
-192.168.1.59 ... "GET /api/status HTTP/1.1" 200 ... "Garmin fenix 7X/26.9"
+tail -f /opt/var/log/nginx/error.log
 
-For an action, expect:
+Tedee relay log:
+
+tail -f /opt/var/log/tedeeproxy.log
+
+A successful Garmin action should typically result in:
 
 POST /api/unlock
 
@@ -660,187 +1604,135 @@ followed by:
 
 GET /api/status
 
-Relay log:
+23. Verify Everything After Router Reboot
 
-tail -f /opt/var/log/tedeeproxy.log
+After reboot:
 
-24. End-to-end test
+/opt/etc/init.d/S99tedeeproxy status
 
-Open two SSH windows.
+Check Python:
 
-Window 1:
+ps | grep server.py
 
-tail -f /opt/var/log/nginx/access.log
+Check nginx:
 
-Window 2:
+ps | grep nginx
 
-tail -f /opt/var/log/tedeeproxy.log
+Check listening ports:
 
-Then on Garmin:
+netstat -lntp | grep 8090
 
-Open Tedee Lock.
+and:
 
-Confirm cached state appears.
+netstat -lntp | grep 9443
 
-Select UNLOCK.
+Test:
 
-Confirm the unlock prompt.
+curl -i http://127.0.0.1:PORT/health
 
-Let Garmin enter Wi-Fi sync.
+Then:
 
-Confirm the door physically unlocks.
+curl -i https://your.home.domain:PORT/health
 
-Confirm nginx shows POST /api/unlock.
+24. Backup the Configuration
 
-Confirm the relay contacts the Tedee Bridge.
+Recommended backup files:
 
-Confirm the action is normalized to JSON HTTP 200.
+/tmp/mnt/entwere/entware/tedee/server.py
+/tmp/mnt/entwere/entware/tedee/.env
+/opt/etc/init.d/S99tedeeproxy
+/opt/etc/nginx/nginx.conf
+/jffs/scripts/services-start
 
-Confirm Garmin sends GET /api/status.
+You may also record the certificate paths:
 
-Confirm the new lock state is cached.
+/jffs/.le/your.home.domain_ecc/fullchain.pem
+/jffs/.le/your.home.domain_ecc/domain.key
 
-Repeat with LOCK.
+but normally do not manually back up or redistribute the private key unless you have a secure encrypted backup procedure.
 
-25. Expected final behaviour
+25. Security
 
-Locked door:
-
-State: CLOSED
-Default action: UNLOCK
-
-Unlock flow:
-
-UNLOCK
--> confirmation
--> Garmin Wi-Fi sync
--> POST /api/unlock
--> Tedee 204
--> relay JSON 200
--> GET /api/status
--> cached state updated
-
-Already locked:
-
-LOCK
--> relay sees state 6
--> no redundant Tedee lock command required
--> HTTP 200
--> note=already_locked
--> watch displays ALREADY LOCKED
-
-Already unlocked:
-
-UNLOCK
--> relay sees state 2
--> HTTP 200
--> note=already_unlocked
--> watch displays ALREADY UNLOCKED
-
-26. Tedee auto-lock
-
-If Tedee has auto-lock enabled with a 300 second delay, the lock can secure itself five minutes after unlocking. A later manual LOCK command may therefore be redundant. The relay's idempotent state check makes that a successful no-op rather than an error.
-
-27. Security recommendations
-
-Keep these secret:
+Keep these private:
 
 TEDEE_BRIDGE_TOKEN
 WATCH_TOKEN
+domain.key
 
-Recommended:
+Do not publish them.
 
-Do not commit .env.
+If either token has ever been exposed publicly, rotate it.
 
-Do not publish the real watch token.
+The public service should expose only:
 
-Rotate tokens if exposed.
+/health
+/api/status
+/api/lock
+/api/unlock
 
-Keep the router firmware updated.
+Everything else should return:
 
-Keep the Let's Encrypt certificate renewed.
+404
 
-Limit nginx exposure to the required API paths where practical.
+26. Final Router-Side File Checklist
 
-Do not expose the ASUS administration interface on the same public port used by the Tedee relay.
+Custom application
 
-28. Useful service commands
+/tmp/mnt/entwere/entware/tedee/server.py
 
-Relay:
+Secrets/config
 
-/opt/etc/init.d/S99tedeeproxy restart
-/opt/etc/init.d/S99tedeeproxy status
+/tmp/mnt/entwere/entware/tedee/.env
 
-nginx:
+Python relay service
 
-/opt/sbin/nginx -t
-/opt/etc/init.d/S80nginx restart
+/opt/etc/init.d/S99tedeeproxy
 
-Ports and processes:
+nginx service supplied by Entware
 
-netstat -lntp
-ps | grep python
-ps | grep nginx
+/opt/etc/init.d/S80nginx
 
-29. Final working data flow
+nginx TLS reverse proxy configuration
 
-Garmin fēnix 7X
-        |
-        | Garmin Wi-Fi sync
-        | HTTPS
-        v
-homeie.hopto.org:9443
-        |
-        v
-nginx
-        |
-        | HTTP/1.1
-        v
-127.0.0.1:8090
-        |
-        v
-Python Tedee relay
-        |
-        | api_token
-        v
-IP X.X.X.X:80
-        |
-        v
-Tedee Bridge
-        |
-        v
-Tedee Lock
+/opt/etc/nginx/nginx.conf
 
-30. Key lessons from the working implementation
+Merlin boot hook
 
-The pieces that made the final setup reliable were:
+/jffs/scripts/services-start
 
-HTTPS in front of the Python relay.
+Let's Encrypt certificate
 
-Correct Let's Encrypt hostname.
+/jffs/.le/your.home.domain_ecc/fullchain.pem
 
-Garmin Communications permission.
+Let's Encrypt private key
 
-Garmin sync mode for phone-independent Wi-Fi requests.
+/jffs/.le/your.home.domain_ecc/domain.key
 
-Correct typed Monkey C callbacks.
+27. Final Architecture
 
-Persistent action state through Application.Storage.
+Garmin fēnix 7X / MARQ Gen 2
+             |
+             | HTTPS :PORT
+             v
+     your.home.domain
+             |
+             v
+          nginx
+             |
+             | HTTP/1.1
+             v
+      127.0.0.1:PORT
+             |
+             v
+        server.py
+             |
+             | api_token
+             v
+   Tedee Bridge X.X.X.X
+             |
+             v
+        Tedee Lock
 
-.equals() string comparison.
-
-A single effective notifySyncComplete() path.
-
-Conversion of Tedee 204 action success into JSON 200.
-
-Idempotent lock/unlock handling.
-
-Accurate HTTP Content-Length.
-
-HTTP/1.1 support in the Python handler.
-
-Reading and discarding unused POST request bodies.
-
-Cached lock state used to choose the sensible default action.
+This is the complete router-side setup required for the working Garmin-to-Tedee solution.
 
 This configuration was tested successfully with a physical Garmin fēnix 7X, marq2 and a Tedee smart lock.
